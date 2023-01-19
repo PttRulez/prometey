@@ -2,14 +2,14 @@ import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import authSlice from './authSlice';
 import notificationSlice from './notificationSlice';
 import networksSlice from './networksSlice';
-import timetableSlice from './accountsSlice';
+import accountsSlice from './accountsSlice';
 
 export const store = configureStore({
   reducer: {
     auth: authSlice,
     notification: notificationSlice,
     networks: networksSlice,
-    timetable: timetableSlice,
+    accounts: accountsSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -28,9 +28,13 @@ const notificationSlice = createSlice({
   reducers: {
     openNotification(state, action: PayloadAction<ActionOpenNotification>) {
       let { error, text, type } = action.payload;
-
+      console.log('notificationSlice', error);
       if (error?.response?.status === 422) {
-        text = Object.entries(error.response.data as { [key: string]: string }).map(message => {
+        text = Object.entries(
+          // @ts-ignore
+          (error.response.data?.errors as { [key: string]: string }) ||
+            (error.response.data as { [key: string]: string })
+        ).map((message) => {
           return `${message[0]} : ${message[1]}`;
         }, '');
       }
@@ -44,6 +48,9 @@ const notificationSlice = createSlice({
   },
 });
 
-export const { openNotification, closeNotification } = notificationSlice.actions;
+export const {
+  openNotification,
+  closeNotification,
+} = notificationSlice.actions;
 
 export default notificationSlice.reducer;

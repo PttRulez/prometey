@@ -17,7 +17,20 @@ const Layout = () => {
         }}
       >
         <SideMenu />
-        <Container maxWidth="xl" sx={{ mt: 3, minHeight: '100%' }}>
+        <Container
+          // maxWidth="xl"
+          // sx={}
+          sx={{
+            mt: 3,
+            minHeight: '100%',
+            paddingBottom: '100px',
+            '&.MuiContainer-root': {
+              // width: 'fit-content',
+              maxWidth: '95%',
+              // overflowX: 'auto',
+            },
+          }}
+        >
           <Outlet />
           <Notification />
         </Container>

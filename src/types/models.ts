@@ -23,6 +23,7 @@ export interface Room {
   id: number;
   name: string;
   network_id: number;
+  network: Network;
   status_id: number;
   cashout_scenario: number;
   deposit_scenario: number;
@@ -46,6 +47,7 @@ export interface Account {
   limits: Limit[];
   limits_group: string;
   login: string;
+  network_id: number;
   nickname: string;
   password: string;
   person_id: number;

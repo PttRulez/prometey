@@ -1,82 +1,101 @@
-import { FC } from 'react';
-import Select, { SelectOption } from '../../../components/ui/Select';
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import { Button } from '@mui/material';
+import { FC, useEffect } from 'react';
+import Select from '../../../components/ui/Select';
 import Grid from '@mui/material/Unstable_Grid2';
-import { useAppDispatch } from '../../../hooks/redux';
-import { fetchTimeTable } from '../../../store/accountsSlice';
-
-interface ITimeTableFilters extends FieldValues {
-  network_id: string;
-  affiliate_id: string;
-}
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import {
+  fetchTimeTable,
+  setTimetableFilters,
+} from '../../../store/accountsSlice';
 
 const TimetableFilters: FC = () => {
   const dispatch = useAppDispatch();
-
-  const { control, handleSubmit, setValue, watch } = useForm<ITimeTableFilters>(
-    {
-      defaultValues: {
-        network_id: '',
-        affiliate_id: '',
-      },
-    }
+  const { timeTableFilters: filters, timetable } = useAppSelector(
+    (state) => state.accounts
   );
 
-  const watchAll = watch();
-  const options: SelectOption[] = [
-    { title: 'Chico', value: 1 },
-    { title: 'IPoker', value: 2 },
-  ];
-
-  const onSubmit: SubmitHandler<ITimeTableFilters> = (data) => {
-    console.log('data', data);
-    dispatch(fetchTimeTable(data));
-  };
-
+  useEffect(() => {
+    dispatch(fetchTimeTable());
+  }, [filters]);
   return (
-    <Grid
-      container
-      // alignItems="stretch"
-      // sx={{ justifyContent: 'end' }}
-      justifyContent={'flex-end'}
-      spacing={2}
-    >
+    <Grid container justifyContent={'flex-end'} spacing={2}>
       <Grid>
         <Select
-          // @ts-expect-error
-          control={control}
-          handleClear={() => setValue('network_id', '')}
+          handleClear={() =>
+            dispatch(setTimetableFilters({ ...filters, network_id: '' }))
+          }
           label="Сеть"
-          name="network_id"
-          options={options}
-          value={watchAll.network_id}
+          options={timetable.networkList}
+          value={filters.network_id}
           sx={{ minWidth: 200 }}
+          onChange={(e) => {
+            dispatch(
+              setTimetableFilters({ ...filters, network_id: e.target.value })
+            );
+          }}
         />
       </Grid>
       <Grid>
         <Select
-          // @ts-expect-error
-          control={control}
-          handleClear={() => setValue('affiliate_id', '')}
+          handleClear={() =>
+            dispatch(setTimetableFilters({ ...filters, affiliate_id: '' }))
+          }
           label="Аффилейт"
-          name="affiliate_id"
-          options={options}
-          value={watchAll.affiliate_id}
+          options={timetable.affiliateList}
+          value={filters.affiliate_id}
           sx={{ minWidth: 200 }}
+          onChange={(e) => {
+            dispatch(
+              setTimetableFilters({ ...filters, affiliate_id: e.target.value })
+            );
+          }}
         />
-      </Grid>
-      <Grid>
-        <Button
-          onClick={handleSubmit(onSubmit)}
-          variant={'contained'}
-          sx={{ height: '100%' }}
-        >
-          Фильтр
-        </Button>
       </Grid>
     </Grid>
   );
+
+  // return (
+  //   <Grid
+  //     container
+  //     // alignItems="stretch"
+  //     // sx={{ justifyContent: 'end' }}
+  //     justifyContent={'flex-end'}
+  //     spacing={2}
+  //   >
+  //     <Grid>
+  //       <FormSelect
+  //         // @ts-expect-error
+  //         control={control}
+  //         handleClear={() => setValue('network_id', '')}
+  //         label="Сеть"
+  //         name="network_id"
+  //         options={networkList}
+  //         // value={watchAll.network_id}
+  //         sx={{ minWidth: 200 }}
+  //       />
+  //     </Grid>
+  //     <Grid>
+  //       <FormSelect
+  //         // @ts-expect-error
+  //         control={control}
+  //         handleClear={() => setValue('affiliate_id', '')}
+  //         label="Аффилейт"
+  //         name="affiliate_id"
+  //         options={affiliateList}
+  //         value={watchAll.affiliate_id}
+  //         sx={{ minWidth: 200 }}
+  //       />
+  //     </Grid>
+  //     <Grid>
+  //       <Button
+  //         onClick={handleSubmit(onSubmit)}
+  //         variant={'contained'}
+  //         sx={{ height: '100%' }}
+  //       >
+  //         Фильтр
+  //       </Button>
+  //     </Grid>
+  //   </Grid>
+  // );
 };
 
 export default TimetableFilters;

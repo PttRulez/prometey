@@ -7,21 +7,21 @@ import TimetableFilters from './components/TimetableFilters';
 
 const TimeTable: FC = () => {
   const dispatch = useAppDispatch();
-  const timetable = useAppSelector((state) => state.timetable.timetable);
+  const { models } = useAppSelector((state) => state.accounts.timetable);
 
   useLayoutEffect(() => {
-    dispatch(fetchTimeTable({ network_id: 1, affiliate_id: '' }));
+    dispatch(fetchTimeTable());
   }, [dispatch]);
 
   return (
     <Box sx={{ margin: 'auto' }}>
       <TimetableFilters />
-      {timetable &&
-        Object.keys(timetable.models).map((networkName) => (
+      {models &&
+        Object.keys(models).map((networkName) => (
           <Network
             key={networkName}
             networkName={networkName}
-            disciplines={timetable.models[networkName]}
+            disciplines={models[networkName]}
           />
         ))}
     </Box>

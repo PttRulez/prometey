@@ -1,20 +1,29 @@
 import { AxiosResponse } from 'axios';
 import $api from '../http';
-
-export interface TimetableFilters {
-  affiliate_id: number | string;
-  are_used_now?: boolean;
-  bob_id?: string;
-  login?: string;
-  network_id: number | string;
-  nickname?: string;
-}
+import {
+  AccountsFilters,
+  AccountsResponse,
+  TimetableFilters,
+} from '../types/Accounts';
+import { Account } from '../types/models';
 
 const AccountsService = {
-  fetchTimetable(filters: TimetableFilters): Promise<AxiosResponse<any>> {
+  fetchTimetable(
+    filters: TimetableFilters
+  ): Promise<AxiosResponse<AccountsResponse>> {
     return $api.get('/accounts/timetable', {
       params: { filters: JSON.stringify(filters) },
     });
+  },
+  fetchAccounts(
+    filters: AccountsFilters
+  ): Promise<AxiosResponse<AccountsResponse>> {
+    return $api.get('/accounts', {
+      params: { filters: JSON.stringify(filters) },
+    });
+  },
+  updateAccount(account: Account): Promise<AxiosResponse<any>> {
+    return $api.put(`/accounts/${account.id}`, account);
   },
 };
 
