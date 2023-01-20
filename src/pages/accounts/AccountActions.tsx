@@ -16,7 +16,7 @@ const AccountActions: FC<{
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  console.log('AccountActions', params);
+
   const handleSubmit = async () => {
     try {
       setLoading(true);

@@ -1,4 +1,4 @@
-import { User } from "../models";
+import { User } from './users';
 
 export interface AuthState {
   authenticated: boolean;
@@ -14,7 +14,7 @@ export interface Credentials {
 export interface AuthResponse {
   access_token: string;
   token_type: string;
-  expires_in:  number;
+  expires_in: number;
   user: User;
 }
 

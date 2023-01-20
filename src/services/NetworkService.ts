@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import $api from '../http';
-import { Network } from '../types/models';
+import { Network } from '../types/networks';
 
 const NetworkService = {
   fetchNetworks(): Promise<AxiosResponse<Network[]>> {

@@ -9,6 +9,7 @@ import {
   WbSunnyTwoTone,
   WbTwilightTwoTone,
 } from '@mui/icons-material';
+import { getOptionsList } from '../../helpers/common';
 
 const Accounts = () => {
   const dispatch = useAppDispatch();
@@ -20,10 +21,7 @@ const Accounts = () => {
   const [rowId, setRowId] = useState<number | null>(null);
 
   const networks = useMemo(() => {
-    return Object.entries(networkList).reduce((acc, cur) => {
-      acc.push({ value: Number(cur[0]), label: cur[1] });
-      return acc;
-    }, [] as { value: number; label: string }[]);
+    return getOptionsList(networkList);
   }, [networkList]);
 
   const columns: GridColDef[] = useMemo(
@@ -74,10 +72,7 @@ const Accounts = () => {
         valueFormatter: (params) => {
           return statuses[params.value];
         },
-        valueOptions: Object.entries(statuses).reduce((acc, cur) => {
-          acc.push({ value: Number(cur[0]), label: cur[1] });
-          return acc;
-        }, [] as { value: number; label: string }[]),
+        valueOptions: getOptionsList(statuses),
       },
       {
         field: 'shift_id',

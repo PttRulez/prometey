@@ -3,13 +3,17 @@ import authSlice from './authSlice';
 import notificationSlice from './notificationSlice';
 import networksSlice from './networksSlice';
 import accountsSlice from './accountsSlice';
+import contractsSlice from './contractsSlice';
+import selectListsSlice from './selectListsSlice';
 
 export const store = configureStore({
   reducer: {
-    auth: authSlice,
-    notification: notificationSlice,
-    networks: networksSlice,
     accounts: accountsSlice,
+    auth: authSlice,
+    contracts: contractsSlice,
+    networks: networksSlice,
+    notification: notificationSlice,
+    selectLists: selectListsSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

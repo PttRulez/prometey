@@ -1,11 +1,11 @@
 import { AxiosResponse } from 'axios';
 import $api from '../http';
 import {
+  Account,
   AccountsFilters,
   AccountsResponse,
   TimetableFilters,
-} from '../types/Accounts';
-import { Account } from '../types/models';
+} from '../types/accounts';
 
 const AccountsService = {
   fetchTimetable(

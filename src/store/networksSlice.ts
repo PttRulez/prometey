@@ -1,13 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import NetworkService from '../services/NetworkService';
-import { Network } from '../types/models';
-import { NetworkState } from '../types/slices/NetworkSliceTypes';
-
-const initialState: NetworkState = {
-  network: {} as Network,
-  networkList: [],
-  networkListLoading: false,
-};
+import { networksInitialState } from './initialState';
 
 export const fetchNetworks = createAsyncThunk(
   'networks/fetchAllNetworks',
@@ -35,7 +28,7 @@ export const fetchSingleNetwork = createAsyncThunk(
 
 const networkSlice = createSlice({
   name: 'networks',
-  initialState,
+  initialState: networksInitialState,
   reducers: {},
   extraReducers(builder) {
     builder

@@ -28,7 +28,6 @@ const notificationSlice = createSlice({
   reducers: {
     openNotification(state, action: PayloadAction<ActionOpenNotification>) {
       let { error, text, type } = action.payload;
-      console.log('notificationSlice', error);
       if (error?.response?.status === 422) {
         text = Object.entries(
           // @ts-ignore

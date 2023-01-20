@@ -1,15 +1,15 @@
 import { FC } from 'react';
-import { AppBar, List, styled } from '@mui/material';
+import { AppBar, List } from '@mui/material';
 
 import menu from './menu';
 import MenuItem from './MenuItem';
-import { useAppSelector } from '../../hooks/redux';
+import { useAppSelector } from '../../../hooks/redux';
 
 const SideMenu: FC = () => {
-  const { authenticated } = useAppSelector(state => state.auth);
+  const { authenticated } = useAppSelector((state) => state.auth);
   return (
     <AppBar
-      component='aside'
+      component="aside"
       sx={{
         bgcolor: 'secondary.dark',
         height: '100%',
@@ -33,9 +33,9 @@ const SideMenu: FC = () => {
         },
       }}
     >
-      <List component='nav' sx={{ padding: 0 }}>
+      <List component="nav" sx={{ padding: 0 }}>
         {authenticated &&
-          menu.map(item => {
+          menu.map((item) => {
             return <MenuItem item={item} key={`${item.link} ${item.title}`} />;
           })}
       </List>

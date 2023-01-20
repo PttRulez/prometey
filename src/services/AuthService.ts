@@ -1,10 +1,13 @@
 import { AxiosResponse } from 'axios';
 import $api from '../http';
-import { User } from '../types/models';
-import { AuthResponse } from '../types/slices/AuthSliceTypes';
+import { User } from '../types/users';
+import { AuthResponse } from '../types/auth';
 
 export default class AuthService {
-  static async login(email: string, password: string): Promise<AxiosResponse<AuthResponse>> {
+  static async login(
+    email: string,
+    password: string
+  ): Promise<AxiosResponse<AuthResponse>> {
     return $api.post<AuthResponse>('/auth/login', { email, password });
   }
 

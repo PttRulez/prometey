@@ -1,20 +1,20 @@
 import { FC, useEffect } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { Box, TextField } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { login } from '../../store/authSlice';
-import { Credentials } from '../../types/slices/AuthSliceTypes';
+import { Credentials } from '../../types/auth';
 import { LoadingButton } from '@mui/lab';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import routes from '../../router/routes';
 
 const Login: FC = () => {
   const { handleSubmit, register } = useForm<Credentials>();
   const dispatch = useAppDispatch();
-  const { authenticated, loading } = useAppSelector(state => state.auth);
+  const { authenticated, loading } = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<Credentials> = data => {
+  const onSubmit: SubmitHandler<Credentials> = (data) => {
     dispatch(login(data));
   };
 
@@ -36,9 +36,9 @@ const Login: FC = () => {
       }}
     >
       <Box
-        component='form'
+        component="form"
         onSubmit={handleSubmit(onSubmit)}
-        autoComplete='off'
+        autoComplete="off"
         sx={{
           display: 'flex',
           flexDirection: 'column',
@@ -50,9 +50,19 @@ const Login: FC = () => {
           padding: 4,
         }}
       >
-        <TextField label='Логин' variant='standard' {...register('email')} />
-        <TextField label='Пароль' variant='standard' type='password' {...register('password')} />
-        <LoadingButton variant='outlined' color='inherit' type='submit' loading={loading}>
+        <TextField label="Логин" variant="standard" {...register('email')} />
+        <TextField
+          label="Пароль"
+          variant="standard"
+          type="password"
+          {...register('password')}
+        />
+        <LoadingButton
+          variant="outlined"
+          color="inherit"
+          type="submit"
+          loading={loading}
+        >
           Логин
         </LoadingButton>
       </Box>

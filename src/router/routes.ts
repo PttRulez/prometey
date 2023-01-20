@@ -20,6 +20,10 @@ const routes = {
     edit: '/networks/:id/edit',
     create: '/networks/:id/edit',
   },
+  contracts: {
+    index: '/contracts',
+    edit: '/contracts/:id/edit',
+  },
   report: {
     index: '/report',
   },

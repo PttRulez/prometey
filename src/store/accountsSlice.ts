@@ -1,9 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TimetableFilters } from '../types/Accounts';
+import { Account, TimetableFilters } from '../types/accounts';
 import AccountsService from '../services/AccountsService';
 import { RootState } from './store';
 import { accountsInitialState } from './initialState';
-import { Account } from '../types/models';
 
 export const fetchTimeTable = createAsyncThunk(
   'accounts/fetchTimeTable',

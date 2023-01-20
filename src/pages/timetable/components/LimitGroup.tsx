@@ -2,7 +2,7 @@ import { FC } from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
 import { Box, Stack } from '@mui/material';
 import AccountCard from './AccountCard';
-import { Account } from '../../../types/models';
+import { Account } from '../../../types/accounts';
 import { v4 as uuid } from 'uuid';
 
 interface ILimitGroupProps {

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import AuthService from '../services/AuthService';
-import { AuthState, Credentials } from '../types/slices/AuthSliceTypes';
+import { AuthState, Credentials } from '../types/auth';
 import { openNotification } from './notificationSlice';
 import { AxiosError } from 'axios';
 

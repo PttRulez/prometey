@@ -18,7 +18,7 @@ interface SelectProps {
   sx: SxProp;
 }
 
-const FormSelect: FC<SelectProps> = ({
+const Select: FC<SelectProps> = ({
   handleClear,
   onChange,
   label,
@@ -54,4 +54,4 @@ const FormSelect: FC<SelectProps> = ({
   );
 };
 
-export default FormSelect;
+export default Select;

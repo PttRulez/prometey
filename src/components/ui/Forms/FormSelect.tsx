@@ -5,7 +5,7 @@ import {
   IconButton,
   InputLabel,
   MenuItem,
-  Select as MuiSelect,
+  Select,
 } from '@mui/material';
 
 import ClearIcon from '@mui/icons-material/Clear';
@@ -38,7 +38,7 @@ const FormSelect: FC<FormSelectProps> = ({
       render={({ field }) => (
         <FormControl {...props} fullWidth>
           <InputLabel id={label}>{label}</InputLabel>
-          <MuiSelect
+          <Select
             {...field}
             labelId={label}
             id={`${label}-Select`}
@@ -52,7 +52,7 @@ const FormSelect: FC<FormSelectProps> = ({
             }}
             endAdornment={
               <IconButton
-                sx={{ display: value ? '' : 'none', color: 'primary.main' }}
+                sx={{ display: value ? '' : 'none' }}
                 onClick={handleClear}
               >
                 <ClearIcon />
@@ -64,7 +64,7 @@ const FormSelect: FC<FormSelectProps> = ({
                 {value}
               </MenuItem>
             ))}
-          </MuiSelect>
+          </Select>
         </FormControl>
       )}
     />
