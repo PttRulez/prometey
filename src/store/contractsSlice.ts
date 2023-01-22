@@ -1,12 +1,7 @@
-import {
-  createAsyncThunk,
-  createSlice,
-  current,
-  PayloadAction,
-} from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import ContractService from '../services/ContractService';
 import { contractsInitialState } from './initialState';
-import { Contract } from '../types/contracts';
+import { Contract, ContractFromServer } from '../types/contracts';
 
 export const fetchContracts = createAsyncThunk(
   'contracts/fetchAll',
@@ -24,10 +19,15 @@ const contractsSlice = createSlice({
   name: 'contracts',
   initialState: contractsInitialState,
   reducers: {
-    updateContract: (state, { payload: contract }: PayloadAction<Contract>) => {
+    addContract: (state, { payload: contract }: PayloadAction<Contract>) => {
+      state.contracts.push(contract);
+      return state;
+    },
+    updateContract: (
+      state,
+      { payload: contract }: PayloadAction<ContractFromServer>
+    ) => {
       const index = state.contracts.findIndex((c) => c.id === contract.id);
-      console.log('index', index, state.contracts[index]);
-      console.log('contracts state', current(state));
       if (index >= 0) {
         state.contracts[index] = { ...state.contracts[index], ...contract };
       }
@@ -41,6 +41,6 @@ const contractsSlice = createSlice({
   },
 });
 
-export const { updateContract } = contractsSlice.actions;
+export const { addContract, updateContract } = contractsSlice.actions;
 
 export default contractsSlice.reducer;

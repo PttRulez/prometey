@@ -7,8 +7,13 @@ type Props = {
 
 const BasicTable: FC<Props> = ({ children }) => {
   return (
-    <TableContainer component={Paper} sx={{ padding: '30px' }}>
-      <Table aria-label="simple table">{children}</Table>
+    <TableContainer
+      component={Paper}
+      sx={{ padding: '30px', overflowX: 'initial' }}
+    >
+      <Table aria-label="simple table" stickyHeader>
+        {children}
+      </Table>
     </TableContainer>
   );
 };

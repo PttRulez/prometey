@@ -1,23 +1,23 @@
 import { FC } from 'react';
-import { Contract } from '../../types/contracts';
+import { ContractInForm } from '../../types/contracts';
 import { Button } from '@mui/material';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import FormText from '../../components/ui/Forms/FormText';
+import FormTextInput from '../../components/ui/Forms/FormTextInput';
 import VerticalForm from '../../components/ui/Forms/VerticalForm';
 import FormSelect from '../../components/ui/Forms/FormSelect';
 import ContractService from '../../services/ContractService';
 import { AxiosError } from 'axios';
 import { openNotification } from '../../store/notificationSlice';
-import { updateContract } from '../../store/contractsSlice';
+import { addContract, updateContract } from '../../store/contractsSlice';
 
 type Props = {
-  contract: Contract;
+  contract: ContractInForm;
   afterSuccesfulSubmit: () => void;
 };
 
 const ContractForm: FC<Props> = ({ afterSuccesfulSubmit, contract }) => {
-  const { control, handleSubmit, setValue, watch } = useForm<Contract>({
+  const { control, handleSubmit, setValue, watch } = useForm<ContractInForm>({
     defaultValues: contract,
   });
   const networksList = useAppSelector(
@@ -27,13 +27,16 @@ const ContractForm: FC<Props> = ({ afterSuccesfulSubmit, contract }) => {
   const dispatch = useAppDispatch();
   const watchAll = watch();
 
-  const onSubmit: SubmitHandler<Contract> = async (data) => {
-    console.log('submittted contract', data);
-
+  const onSubmit: SubmitHandler<ContractInForm> = async (data) => {
     try {
-      await ContractService.updateContract(data);
+      if (data.id) {
+        const response = await ContractService.updateContract(data);
+        dispatch(updateContract(response.data));
+      } else {
+        const response = await ContractService.createContract(data);
+        dispatch(addContract(response.data));
+      }
 
-      dispatch(updateContract(data));
       dispatch(
         openNotification({ type: 'success', text: 'Контракт сохранился' })
       );
@@ -43,7 +46,7 @@ const ContractForm: FC<Props> = ({ afterSuccesfulSubmit, contract }) => {
         openNotification({
           error: e as AxiosError,
           type: 'error',
-          text: 'Вы НЕ залогинились',
+          text: 'Ошибка при сохранении контракта',
         })
       );
     }
@@ -54,26 +57,24 @@ const ContractForm: FC<Props> = ({ afterSuccesfulSubmit, contract }) => {
       component="form"
       onSubmit={handleSubmit(onSubmit)}
       autoComplete="off"
+      sx={{ minWidth: '500px' }}
     >
-      <FormText
+      <FormTextInput
         //@ts-ignore
         control={control}
         handleClear={() => setValue('name', '')}
         label="Название контракта"
         name="name"
         value={watchAll.name}
-        variant="outlined"
       />
       <FormSelect
         // @ts-ignore
         control={control}
-        // @ts-ignore
         handleClear={() => setValue('network_id', null)}
         label="Сеть"
         name="network_id"
         options={networksList}
         value={watchAll.network_id}
-        varian="standart"
       />
       <Button variant="contained" type="submit">
         Сохранить

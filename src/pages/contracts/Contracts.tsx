@@ -4,19 +4,18 @@ import BasicTableHeader from '../../components/ui/BasicTable/BasicTableHeader';
 import {
   Dialog,
   IconButton,
-  Link,
   TableBody,
   TableCell,
   TableRow,
 } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { Link as RouterLink } from 'react-router-dom';
 import { fetchContracts } from '../../store/contractsSlice';
-import { Contract, contractPropsArr } from '../../types/contracts';
-import { ModeEdit } from '@mui/icons-material';
+import { ContractInForm, contractPropsArr } from '../../types/contracts';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import ContractForm from './ContractForm';
 import { pick } from 'lodash';
-import { fetchNetworksList } from '../../store/selectListsSlice';
+import AddNewButton from '../../components/ui/AddNewButton';
+import { emptyContract } from '../../constants/empties';
 
 const Contracts: FC = () => {
   const dispatch = useAppDispatch();
@@ -24,25 +23,23 @@ const Contracts: FC = () => {
   const networksList = useAppSelector(
     (state) => state.selectLists.networksList
   );
-  const [editedContract, setEditedContract] = useState<Contract | null>(null);
+  const [editedContract, setEditedContract] = useState<ContractInForm | null>(
+    null
+  );
 
   useEffect(() => {
-    dispatch(fetchNetworksList());
     dispatch(fetchContracts());
-  }, []);
+  }, [dispatch]);
 
-  const afterSuccesfulSubmit = () => {
-    setEditedContract(null);
-  };
   return (
     <>
       <BasicTable>
         <BasicTableHeader>
           <TableRow>
-            <TableCell></TableCell>
+            <TableCell />
             <TableCell>Номер контракта</TableCell>
             <TableCell>Сеть</TableCell>
-            <TableCell></TableCell>
+            <TableCell />
           </TableRow>
         </BasicTableHeader>
 
@@ -50,36 +47,29 @@ const Contracts: FC = () => {
           {contracts.map((contract, index) => (
             <TableRow key={contract.name}>
               <TableCell>{index + 1}</TableCell>
-              <TableCell>
-                <Link
-                  component={RouterLink}
-                  to={`/contracts/${contract.id}`}
-                  underline={'hover'}
-                >
-                  {contract.name}
-                </Link>
-              </TableCell>
-              <TableCell>{networksList[contract.network_id]}</TableCell>
+              <TableCell>{contract.name}</TableCell>
+              <TableCell>{networksList[contract.network_id!]}</TableCell>
               <TableCell>
                 <IconButton
                   onClick={() =>
                     setEditedContract(
-                      pick(contract, contractPropsArr) as Contract
+                      pick(contract, contractPropsArr) as ContractInForm
                     )
                   }
                 >
-                  <ModeEdit />
+                  <ModeEditIcon />
                 </IconButton>
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </BasicTable>
+      <AddNewButton onClick={() => setEditedContract(emptyContract)} />
       <Dialog open={!!editedContract} onClose={() => setEditedContract(null)}>
         {editedContract && (
           <ContractForm
             contract={editedContract!}
-            afterSuccesfulSubmit={afterSuccesfulSubmit}
+            afterSuccesfulSubmit={() => setEditedContract(null)}
           />
         )}
       </Dialog>

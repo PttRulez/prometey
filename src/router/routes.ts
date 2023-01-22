@@ -22,7 +22,9 @@ const routes = {
   },
   contracts: {
     index: '/contracts',
-    edit: '/contracts/:id/edit',
+  },
+  profiles: {
+    index: '/profiles',
   },
   report: {
     index: '/report',

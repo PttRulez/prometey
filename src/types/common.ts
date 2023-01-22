@@ -18,3 +18,7 @@ export interface SelectListsState {
   networksList: SelectList;
   yearsListList: SelectList;
 }
+
+export interface SomeObject {
+  [key: string]: any;
+}

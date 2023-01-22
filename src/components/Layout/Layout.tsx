@@ -12,8 +12,10 @@ const Layout = () => {
           display: 'flex',
           width: '100%',
           minHeight: '100vh',
-          paddingY: '20px',
           paddingLeft: '240px',
+          '& .MuiInput-root': {
+            minHeight: '40px',
+          },
         }}
       >
         <SideMenu />
@@ -31,20 +33,6 @@ const Layout = () => {
             },
           }}
         >
-          <iframe
-            frameBorder="0"
-            style={{ border: 'none', width: '100%', height: '180px' }}
-            width="100%"
-            height="180"
-            src="https://music.yandex.ru/iframe/#track/40614919/18532304"
-          >
-            Слушайте{' '}
-            <a href="https://music.yandex.ru/album/18532304/track/40614919">
-              Electric Boogie
-            </a>{' '}
-            — <a href="https://music.yandex.ru/artist/5827529">SymphoBreaks</a>{' '}
-            на Яндекс Музыке
-          </iframe>
           <Outlet />
           <Notification />
         </Container>

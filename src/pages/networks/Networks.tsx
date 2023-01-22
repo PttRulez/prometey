@@ -12,7 +12,7 @@ const Networks: FC = () => {
 
   useEffect(() => {
     dispatch(fetchNetworks());
-  }, []);
+  }, [dispatch]);
 
   return (
     <BasicTable>

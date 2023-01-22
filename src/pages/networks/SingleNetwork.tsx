@@ -1,13 +1,12 @@
 import { Typography } from '@mui/material';
 import { FC, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { fetchSingleNetwork } from '../../store/networksSlice';
 
 const SingleNetwork: FC = () => {
   const dispatch = useAppDispatch();
-  const network = useAppSelector(state => state.networks.network);
+  const network = useAppSelector((state) => state.networks.network);
 
   const { id } = useParams();
 
@@ -17,8 +16,8 @@ const SingleNetwork: FC = () => {
 
   return (
     <>
-      <Typography variant='h3'>{network.name}</Typography>
-      <Typography variant='body1'>{network.info}</Typography>
+      <Typography variant="h3">{network.name}</Typography>
+      <Typography variant="body1">{network.info}</Typography>
     </>
   );
 };

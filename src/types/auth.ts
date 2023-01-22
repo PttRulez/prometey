@@ -4,6 +4,7 @@ export interface AuthState {
   authenticated: boolean;
   user: User | null;
   loading: boolean;
+  bearerToken: string | null;
 }
 
 export interface Credentials {

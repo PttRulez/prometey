@@ -7,7 +7,16 @@ type Props = {
 
 const BasicTableHeader: FC<Props> = ({ children }) => {
   return (
-    <TableHead sx={{ th: { fontWeight: 'bold', textAlign: 'start' } }}>
+    <TableHead
+      sx={{
+        th: {
+          fontWeight: 'bold',
+          textAlign: 'start',
+          position: 'sticky',
+          top: 0,
+        },
+      }}
+    >
       {children}
     </TableHead>
   );

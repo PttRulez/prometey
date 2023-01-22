@@ -12,6 +12,7 @@ import Auth from '../components/Auth';
 import routes from './routes';
 import SingleNetwork from '../pages/networks/SingleNetwork';
 import Contracts from '../pages/contracts/Contracts';
+import Profiles from '../pages/profiles/Profiles';
 
 const AppRouter = () => {
   return (
@@ -28,6 +29,7 @@ const AppRouter = () => {
             <Route path={routes.cashier.index} element={<Cashier />} />
             <Route path={routes.contracts.index} element={<Contracts />} />
             <Route path={routes.networks.index} element={<Networks />} />
+            <Route path={routes.profiles.index} element={<Profiles />} />
             <Route path={routes.report.index} element={<Report />} />
             <Route path={routes.networks.show} element={<SingleNetwork />} />
 

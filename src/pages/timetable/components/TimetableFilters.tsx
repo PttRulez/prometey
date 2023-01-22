@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react';
-import Select from '../../../components/ui/Select';
+import SelectInput from '../../../components/ui/NonFormInputs/SelectInput';
 import Grid from '@mui/material/Unstable_Grid2';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import {
@@ -15,11 +15,12 @@ const TimetableFilters: FC = () => {
 
   useEffect(() => {
     dispatch(fetchTimeTable());
-  }, [filters]);
+  }, [dispatch, filters]);
+
   return (
     <Grid container justifyContent={'flex-end'} spacing={2}>
       <Grid>
-        <Select
+        <SelectInput
           handleClear={() =>
             dispatch(setTimetableFilters({ ...filters, network_id: '' }))
           }
@@ -35,7 +36,7 @@ const TimetableFilters: FC = () => {
         />
       </Grid>
       <Grid>
-        <Select
+        <SelectInput
           handleClear={() =>
             dispatch(setTimetableFilters({ ...filters, affiliate_id: '' }))
           }
@@ -52,50 +53,6 @@ const TimetableFilters: FC = () => {
       </Grid>
     </Grid>
   );
-
-  // return (
-  //   <Grid
-  //     container
-  //     // alignItems="stretch"
-  //     // sx={{ justifyContent: 'end' }}
-  //     justifyContent={'flex-end'}
-  //     spacing={2}
-  //   >
-  //     <Grid>
-  //       <FormSelect
-  //         // @ts-expect-error
-  //         control={control}
-  //         handleClear={() => setValue('network_id', '')}
-  //         label="Сеть"
-  //         name="network_id"
-  //         options={networkList}
-  //         // value={watchAll.network_id}
-  //         sx={{ minWidth: 200 }}
-  //       />
-  //     </Grid>
-  //     <Grid>
-  //       <FormSelect
-  //         // @ts-expect-error
-  //         control={control}
-  //         handleClear={() => setValue('affiliate_id', '')}
-  //         label="Аффилейт"
-  //         name="affiliate_id"
-  //         options={affiliateList}
-  //         value={watchAll.affiliate_id}
-  //         sx={{ minWidth: 200 }}
-  //       />
-  //     </Grid>
-  //     <Grid>
-  //       <Button
-  //         onClick={handleSubmit(onSubmit)}
-  //         variant={'contained'}
-  //         sx={{ height: '100%' }}
-  //       >
-  //         Фильтр
-  //       </Button>
-  //     </Grid>
-  //   </Grid>
-  // );
 };
 
 export default TimetableFilters;

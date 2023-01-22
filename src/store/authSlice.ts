@@ -3,12 +3,7 @@ import AuthService from '../services/AuthService';
 import { AuthState, Credentials } from '../types/auth';
 import { openNotification } from './notificationSlice';
 import { AxiosError } from 'axios';
-
-let initialState: AuthState = {
-  authenticated: false,
-  user: null,
-  loading: false,
-};
+import { authInitialState, emptyAuthState } from './initialState';
 
 export const login = createAsyncThunk(
   'auth/login',
@@ -55,13 +50,13 @@ export const refresh = createAsyncThunk(
 
 const authSlice = createSlice({
   name: 'auth',
-  initialState,
+  initialState: authInitialState,
   reducers: {
     setAuth: (state, action: PayloadAction<Omit<AuthState, 'loading'>>) => {
       return { ...action.payload, loading: false };
     },
     logout: (state, action) => {
-      return initialState;
+      return emptyAuthState;
     },
   },
   extraReducers(builder) {
@@ -73,17 +68,24 @@ const authSlice = createSlice({
         state.loading = false;
         state.authenticated = true;
         state.user = action.payload.data.user;
-        localStorage.setItem('token', action.payload.data.access_token);
+        state.bearerToken = action.payload.data.access_token;
+        localStorage.setItem('bearerToken', action.payload.data.access_token);
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
         state.authenticated = false;
         state.user = null;
       })
-      .addCase(logout.fulfilled, (state, action) => {
+      .addCase(logout.pending, (state, action) => {
         state.authenticated = false;
         state.user = null;
-        localStorage.removeItem('token');
+        state.bearerToken = null;
+      })
+      .addCase(logout.fulfilled, (state, action) => {
+        // state.authenticated = false;
+        // state.user = null;
+        // state.bearerToken = null;
+        localStorage.removeItem('bearerToken');
       });
   },
 });

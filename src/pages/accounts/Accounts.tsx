@@ -112,9 +112,9 @@ const Accounts = () => {
 
   useEffect(() => {
     dispatch(fetchAccounts());
-  }, []);
+  }, [dispatch]);
 
-  // ONLY PRO MAKES SENSE
+  // ONLY WITH PRO MAKES SENSE
   // const [filterModel, setFilterModel] = useState<GridFilterModel>({
   //   items: [
   //     // { columnField: 'shift_id', value: 1, operatorValue: 'is' },
@@ -135,7 +135,7 @@ const Accounts = () => {
           console.log('params', params);
           setRowId(params.id as number);
         }}
-        // ONLY PRO MAKES SENSE
+        // ONLY WITH PRO MAKES SENSE
         // filterModel={filterModel}
         // onFilterModelChange={(newFilterModel) => setFilterModel(newFilterModel)}
       />

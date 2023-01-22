@@ -1,6 +1,5 @@
 import {
   Collapse,
-  ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
@@ -17,13 +16,13 @@ interface IMenuItem {
   children?: IMenuItem[];
 }
 
-const IListItemButton = styled(ListItemButton)<NavLinkProps & { component: typeof NavLink }>(
-  ({ theme }) => ({
-    '&.active': {
-      backgroundColor: theme.palette.secondary.light,
-    },
-  })
-);
+const IListItemButton = styled(ListItemButton)<
+  NavLinkProps & { component: typeof NavLink }
+>(({ theme }) => ({
+  '&.active': {
+    backgroundColor: theme.palette.secondary.light,
+  },
+}));
 
 const IListItemIcon = styled(ListItemIcon)(({ theme }) => ({
   color: theme.palette.secondary.contrastText,
@@ -31,23 +30,28 @@ const IListItemIcon = styled(ListItemIcon)(({ theme }) => ({
 
 const CollapsingMenuItem: FC<{ item: IMenuItem }> = ({ item }) => {
   const [open, setOpen] = useState(false);
-  const { link, title, iconName, children } = item;
+  const { title, iconName, children } = item;
 
   return (
     <>
       {/* <ListItem onClick={() => setOpen(prev => !prev)}> */}
-        <ListItemButton onClick={() => setOpen(prev => !prev)} sx={{ paddingY: 2 }}>
-          <IListItemIcon>
-            {Muicon[iconName as keyof typeof Muicon] &&
-              React.createElement(Muicon[iconName as keyof typeof Muicon])}
-          </IListItemIcon>
-          <ListItemText primary={title} />
-          <IListItemIcon>{open ? <Muicon.ExpandLess /> : <Muicon.ExpandMore />}</IListItemIcon>
-        </ListItemButton>
+      <ListItemButton
+        onClick={() => setOpen((prev) => !prev)}
+        sx={{ paddingY: 2 }}
+      >
+        <IListItemIcon>
+          {Muicon[iconName as keyof typeof Muicon] &&
+            React.createElement(Muicon[iconName as keyof typeof Muicon])}
+        </IListItemIcon>
+        <ListItemText primary={title} />
+        <IListItemIcon>
+          {open ? <Muicon.ExpandLess /> : <Muicon.ExpandMore />}
+        </IListItemIcon>
+      </ListItemButton>
       {/* </ListItem> */}
-      <Collapse in={open} timeout='auto' unmountOnExit>
-        {children!.map(item => (
-          <MenuItem item={item} key={`${item.link} ${item.title}`}/>
+      <Collapse in={open} timeout="auto" unmountOnExit>
+        {children!.map((item) => (
+          <MenuItem item={item} key={`${item.link} ${item.title}`} />
         ))}
       </Collapse>
     </>
@@ -59,13 +63,13 @@ const SimpleMenuItem: FC<{ item: IMenuItem }> = ({ item }) => {
 
   return (
     // <ListItem>
-      <IListItemButton component={NavLink} to={link!} sx={{ paddingY: 2 }}>
-        <IListItemIcon>
-          {Muicon[iconName as keyof typeof Muicon] &&
-            React.createElement(Muicon[iconName as keyof typeof Muicon])}
-        </IListItemIcon>
-        <ListItemText primary={title} />
-      </IListItemButton>
+    <IListItemButton component={NavLink} to={link!} sx={{ paddingY: 2 }}>
+      <IListItemIcon>
+        {Muicon[iconName as keyof typeof Muicon] &&
+          React.createElement(Muicon[iconName as keyof typeof Muicon])}
+      </IListItemIcon>
+      <ListItemText primary={title} />
+    </IListItemButton>
     // </ListItem>
   );
 };

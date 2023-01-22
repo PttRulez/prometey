@@ -5,14 +5,15 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { login } from '../../store/authSlice';
 import { Credentials } from '../../types/auth';
 import { LoadingButton } from '@mui/lab';
-import { useNavigate } from 'react-router-dom';
-import routes from '../../router/routes';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Login: FC = () => {
   const { handleSubmit, register } = useForm<Credentials>();
   const dispatch = useAppDispatch();
   const { authenticated, loading } = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || '/';
 
   const onSubmit: SubmitHandler<Credentials> = (data) => {
     dispatch(login(data));
@@ -20,9 +21,9 @@ const Login: FC = () => {
 
   useEffect(() => {
     if (authenticated) {
-      navigate(routes.home);
+      navigate(from, { replace: true });
     }
-  }, [authenticated, navigate]);
+  }, [authenticated, from, navigate]);
 
   return (
     <Box

@@ -53,6 +53,11 @@ const menu = [
         link: '/proxies',
       },
       {
+        title: 'Профили',
+        iconName: '',
+        link: '/profiles',
+      },
+      {
         title: 'Румы',
         iconName: '',
         link: '/rooms',

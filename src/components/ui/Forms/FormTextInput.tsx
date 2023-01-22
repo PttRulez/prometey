@@ -1,35 +1,35 @@
 import { FC } from 'react';
 import { Control, Controller } from 'react-hook-form';
-import SelectInput, { SelectProps } from '../NonFormInputs/SelectInput';
+import TextInput, { TextInputProps } from '../NonFormInputs/TextInput';
 
-interface FormSelectProps extends SelectProps {
+interface FormTextInputProps extends TextInputProps {
   control: Control;
   name: string;
 }
 
-const FormSelect: FC<FormSelectProps> = ({
+const FormTextInput: FC<FormTextInputProps> = ({
   control,
   name,
   onChange,
-  ...selectProps
+  ...textInputProps
 }) => {
   return (
     <Controller
       control={control}
       name={name}
       render={({ field }) => (
-        <SelectInput
+        <TextInput
           onChange={(value) => {
             field.onChange(value);
             if (onChange) {
               onChange(value);
             }
           }}
-          {...selectProps}
+          {...textInputProps}
         />
       )}
     />
   );
 };
 
-export default FormSelect;
+export default FormTextInput;

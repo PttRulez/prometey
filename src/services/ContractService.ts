@@ -1,12 +1,19 @@
 import { AxiosResponse } from 'axios';
 import $api from '../http';
-import { Contract, ContractFromServer } from '../types/contracts';
+import { ContractFromServer, ContractInForm } from '../types/contracts';
 
 const ContractService = {
   fetchContracts(): Promise<AxiosResponse<ContractFromServer[]>> {
     return $api.get<ContractFromServer[]>('/contracts');
   },
-  updateContract(contract: Contract): Promise<AxiosResponse<any>> {
+  createContract(
+    contract: ContractInForm
+  ): Promise<AxiosResponse<ContractFromServer>> {
+    return $api.post(`/contracts`, contract);
+  },
+  updateContract(
+    contract: ContractInForm
+  ): Promise<AxiosResponse<ContractFromServer>> {
     return $api.put(`/contracts/${contract.id}`, contract);
   },
 };
