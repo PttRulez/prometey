@@ -2,7 +2,7 @@ import { FC } from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
 import { Box, Stack } from '@mui/material';
 import AccountCard from './AccountCard';
-import { Account } from '../../../types/accounts';
+import { AccountFromServer } from '../../../types/accounts';
 import { v4 as uuid } from 'uuid';
 
 interface ILimitGroupProps {
@@ -30,7 +30,7 @@ const LimitGroup: FC<ILimitGroupProps> = ({ limitGroupName, shifts }) => {
           {Object.values(shifts).map((accounts) => (
             <Grid xs={4} key={uuid()}>
               <Stack spacing={2}>
-                {accounts.map((account: Account) => (
+                {accounts.map((account: AccountFromServer) => (
                   <AccountCard account={account} key={uuid()} />
                 ))}
               </Stack>

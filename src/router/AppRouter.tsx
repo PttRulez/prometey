@@ -21,7 +21,6 @@ const AppRouter = () => {
         <Route path="/" element={<Layout />}>
           <Route element={<Auth />}>
             <Route path={routes.login} element={<Login />} />
-
             <Route path={routes.accounts.index} element={<Accounts />} />
 
             <Route index element={<TimeTable />} />
@@ -41,3 +40,4 @@ const AppRouter = () => {
   );
 };
 export default AppRouter;
+

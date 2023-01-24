@@ -2,4 +2,6 @@
 .MuiPaper-root.MuiDialog-paper {
     padding: 50px;
     max-width: 95%;
+    max-height: 95%;
 }
+

@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { BobId } from '../../types/bobIds';
 import VerticalForm from '../../components/ui/Forms/VerticalForm';
-import FormTextInput from '../../components/ui/Forms/FormTextInput';
+import FormText from '../../components/ui/Forms/FormText';
 import { useForm } from 'react-hook-form';
 import FormSelect from '../../components/ui/Forms/FormSelect';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
@@ -29,7 +29,7 @@ type Props = {
 const BobIdForm: FC<Props> = ({ bobId, afterSuccesfulSubmit }) => {
   const dispatch = useAppDispatch();
   const { data: profilesLists, isLoading } = useGetProfilesListsQuery();
-  const [profilesList, setProfilesList] = useState<SelectList>([]);
+  const [profilesList, setProfilesList] = useState<SelectList>({});
   const [limitsToShow, setLimitsToShow] = useState<Limit[]>(existinglimits);
   const [discilinesToShow, setDiscilinesToShow] = useState<Discipline[]>(
     existingDisciplines
@@ -89,8 +89,9 @@ const BobIdForm: FC<Props> = ({ bobId, afterSuccesfulSubmit }) => {
               // только те профили, к которым не привязаны боб айди с привязанным хотя бы одним
               // активным или приостановленным аккаунтом
               return (
-                profile.bob_id.accounts?.filter((acc) => acc.status_id <= 2)
-                  .length === 0
+                profile.bob_id.accounts?.filter(
+                  (acc) => acc.status_id && acc.status_id <= 2
+                ).length === 0
               );
             }
           }
@@ -98,7 +99,7 @@ const BobIdForm: FC<Props> = ({ bobId, afterSuccesfulSubmit }) => {
         setProfilesList(getSelectList(filterdList ?? [], 'name'));
       }
     } else {
-      setProfilesList([]);
+      setProfilesList({});
     }
   }, [profilesLists, watchAll.network_id]);
 
@@ -128,9 +129,8 @@ const BobIdForm: FC<Props> = ({ bobId, afterSuccesfulSubmit }) => {
     <VerticalForm
       component="form"
       onSubmit={handleSubmit(onSubmit)}
-      sx={{ minWidth: '500px' }}
     >
-      <FormTextInput
+      <FormText
         //@ts-ignore
         control={control}
         handleClear={() => setValue('bob_id', '')}

@@ -17,7 +17,11 @@ export const profilesApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body,
       }),
-      invalidatesTags: ['Profiles', 'ProfilesSelectList'],
+      invalidatesTags: [
+        'Profiles',
+        'ProfilesSelectList',
+        'preparedAccountFormData',
+      ],
     }),
     updateProfile: build.mutation<ProfileFromServer, ProfileInForm>({
       query: (body: ProfileInForm) => ({
@@ -25,7 +29,11 @@ export const profilesApiSlice = apiSlice.injectEndpoints({
         method: 'PUT',
         body,
       }),
-      invalidatesTags: ['Profiles', 'ProfilesSelectList'],
+      invalidatesTags: [
+        'Profiles',
+        'ProfilesSelectList',
+        'preparedAccountFormData',
+      ],
     }),
   }),
 });

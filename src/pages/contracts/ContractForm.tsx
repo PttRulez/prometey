@@ -3,7 +3,7 @@ import { ContractInForm } from '../../types/contracts';
 import { Button } from '@mui/material';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import FormTextInput from '../../components/ui/Forms/FormTextInput';
+import FormText from '../../components/ui/Forms/FormText';
 import VerticalForm from '../../components/ui/Forms/VerticalForm';
 import FormSelect from '../../components/ui/Forms/FormSelect';
 import ContractService from '../../services/ContractService';
@@ -59,7 +59,7 @@ const ContractForm: FC<Props> = ({ afterSuccesfulSubmit, contract }) => {
       autoComplete="off"
       sx={{ minWidth: '500px' }}
     >
-      <FormTextInput
+      <FormText
         //@ts-ignore
         control={control}
         handleClear={() => setValue('name', '')}

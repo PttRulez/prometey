@@ -1,12 +1,11 @@
-import { FC, useMemo } from 'react';
+import { FC } from 'react';
 import { ProfileInForm } from '../../types/profiles';
 import VerticalForm from '../../components/ui/Forms/VerticalForm';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import FormTextInput from '../../components/ui/Forms/FormTextInput';
+import { useAppDispatch } from '../../hooks/redux';
+import FormText from '../../components/ui/Forms/FormText';
 import FormSelect from '../../components/ui/Forms/FormSelect';
 import { Button, FormGroup } from '@mui/material';
-import { SelectList } from '../../types/common';
 import { openNotification } from '../../store/notificationSlice';
 import {
   useAddProfileMutation,
@@ -19,34 +18,28 @@ import {
 } from '../../constants/common';
 import Grid from '@mui/material/Unstable_Grid2';
 import CheckboxInput from '../../components/ui/NonFormInputs/CheckboxInput';
+import { useGetContractsQuery } from '../../api/contractsApiSlice';
 
 type Props = {
-  afterSuccesfulSubmit: () => void;
+  closeForm: () => void;
   profile: ProfileInForm;
 };
 
-const ProfileForm: FC<Props> = ({ afterSuccesfulSubmit, profile }) => {
+const ProfileForm: FC<Props> = ({ closeForm, profile }) => {
   // В БД оставались null
   if (!profile.disciplines) profile.disciplines = [];
   if (!profile.limits) profile.limits = [];
-
+console.log('profile', profile)
   const { control, handleSubmit, setValue, watch } = useForm<ProfileInForm>({
     defaultValues: profile,
   });
   const dispatch = useAppDispatch();
   const watchAll = watch();
-  const contracts = useAppSelector((state) => state.contracts.contracts);
   const [addProfile] = useAddProfileMutation();
   const [updateProfile] = useUpdateProfileMutation();
+  const { data: contracts } = useGetContractsQuery();
 
-  const contractList = useMemo(() => {
-    const selectList = {} as SelectList;
-    contracts.forEach((c) => {
-      selectList[c.id] = c.name;
-    });
-    return selectList;
-  }, [contracts]);
-
+  console.log('contracts', contracts)
   const onSubmit: SubmitHandler<ProfileInForm> = async (data) => {
     console.log('data', data);
     // return;
@@ -67,7 +60,7 @@ const ProfileForm: FC<Props> = ({ afterSuccesfulSubmit, profile }) => {
             text: 'Профиль успешно обновился',
           })
         );
-        afterSuccesfulSubmit();
+        closeForm();
       }
     } else {
       const result = await addProfile(data);
@@ -83,7 +76,7 @@ const ProfileForm: FC<Props> = ({ afterSuccesfulSubmit, profile }) => {
         dispatch(
           openNotification({ type: 'success', text: 'Профиль создался' })
         );
-        afterSuccesfulSubmit();
+        closeForm();
       }
     }
   };
@@ -93,9 +86,9 @@ const ProfileForm: FC<Props> = ({ afterSuccesfulSubmit, profile }) => {
       component="form"
       onSubmit={handleSubmit(onSubmit)}
       autoComplete="off"
-      sx={{ minWidth: '500px' }}
+      sx={{ minWidth: '500px', backgroundColor: 'white' }}
     >
-      <FormTextInput
+      <FormText
         //@ts-ignore
         control={control}
         handleClear={() => setValue('name', '')}
@@ -109,7 +102,8 @@ const ProfileForm: FC<Props> = ({ afterSuccesfulSubmit, profile }) => {
         handleClear={() => setValue('contract_id', '')}
         label="Контракт"
         name="contract_id"
-        options={contractList}
+        //@ts-ignore
+        options={contracts ?? []}
         value={watchAll.contract_id}
       />
       <FormSelect
@@ -180,6 +174,9 @@ const ProfileForm: FC<Props> = ({ afterSuccesfulSubmit, profile }) => {
       </Grid>
       <Button variant="contained" type="submit">
         Сохранить
+      </Button>
+      <Button variant="outlined" color='info' type="submit" sx={{ color: 'grey.600' }} onClick={closeForm}>
+        Отмена
       </Button>
     </VerticalForm>
   );

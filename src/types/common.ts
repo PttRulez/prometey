@@ -1,10 +1,16 @@
 export interface SelectList {
-  [key: number]: string;
+  [key: number | string]: string;
 }
 
 export interface SelectOption {
+  id: number | string;
+  name: string | number;
+  [key: string]: string | number;
+}
+
+export interface MuiDataGridSelectOption {
+  value: number;
   label: string;
-  value: string | number;
 }
 
 export interface SxProp {
@@ -22,3 +28,5 @@ export interface SelectListsState {
 export interface SomeObject {
   [key: string]: any;
 }
+
+export type SelectedProperty = number | null | '';

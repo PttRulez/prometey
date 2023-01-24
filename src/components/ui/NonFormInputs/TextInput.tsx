@@ -14,9 +14,13 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
   // '& .MuiInput-root': {
   //   minHeight: '40px',
   // },
+  '& .MuiInputBase-root.MuiInput-root': {
+    paddingLeft: '20px',
+    paddingRight: '20px',
+  },
 }));
 
-const FormText: FC<TextInputProps> = ({
+const TextInput: FC<TextInputProps> = ({
   handleClear,
   onChange,
   label,
@@ -30,16 +34,16 @@ const FormText: FC<TextInputProps> = ({
     //   <InputLabel id={label}>{label}</InputLabel>
     <StyledTextField
       InputProps={{
-        endAdornment: value && (
+        endAdornment: value ? (
           <IconButton
             aria-label="toggle password visibility"
             onClick={handleClear}
           >
             <ClearIcon />
           </IconButton>
-        ),
+        ) : '',
       }}
-      label={label}
+      label={<span style={{ marginLeft: '15px' }}>{label}</span>}
       onChange={onChange}
       type={type}
       value={value}
@@ -50,4 +54,4 @@ const FormText: FC<TextInputProps> = ({
   );
 };
 
-export default FormText;
+export default TextInput;

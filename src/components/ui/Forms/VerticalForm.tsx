@@ -6,6 +6,7 @@ const VerticalForm: OverridableComponent<BoxTypeMap> = styled(Box)(
     display: 'flex',
     flexDirection: 'column',
     rowGap: 30,
+    minWidth: '500px',
   })
 );
 

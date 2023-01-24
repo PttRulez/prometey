@@ -15,7 +15,18 @@ const apiSlice = createApi({
       return headers;
     },
   }),
-  tagTypes: ['BobIds', 'Profiles', 'ProfilesSelectList'],
+  tagTypes: [
+    'Accounts',
+    'BobIds',
+    'Cashier',
+    'Cashouts',
+    'Contracts',
+    'Deposits',
+    'Profiles',
+    'ProfilesSelectList',
+    'ProxiesList',
+    'preparedAccountFormData',
+  ],
   endpoints: (builder) => ({}),
 });
 

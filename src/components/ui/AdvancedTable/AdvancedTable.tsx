@@ -11,11 +11,13 @@ import TableRow from '@mui/material/TableRow';
 import { SxProp } from '../../../types/common';
 import AdvancedCell from './AdvancedCell';
 
+type Align = 'left' | 'right' | 'center' | 'inherit' | 'justify';
+
 export interface AdvancedTableColumn {
   name: string;
   label: string;
   minWidth?: number;
-  align?: 'left';
+  align?: Align;
   format?: (value: any, row: { [key: string]: any }) => any;
   render?: (value: any, row: { [key: string]: any }) => ReactNode;
 }
@@ -59,7 +61,7 @@ const AdvancedTable: FC<AdvancedTableProps> = ({ columns, rows, sx }) => {
               {columns.map((column) => (
                 <TableCell
                   key={column.label}
-                  align={column.align}
+                  align={column.align ?? 'left'}
                   style={{ minWidth: column.minWidth }}
                 >
                   {column.label}

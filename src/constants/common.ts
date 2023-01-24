@@ -7,9 +7,9 @@ export const NotificationStatus = {
 };
 
 export const shifts: SelectOption[] = [
-  { label: 'Утро', value: 1 },
-  { label: 'День', value: 2 },
-  { label: 'Вечер', value: 3 },
+  { name: 'Утро', id: 1 },
+  { name: 'День', id: 2 },
+  { name: 'Вечер', id: 3 },
 ];
 
 export const notificationText = {
@@ -65,3 +65,30 @@ export const existingDisciplines: Discipline[] = [
   'PLOR',
   'PLO5C',
 ];
+
+export const cashoutStatusesList = {
+  1: 'В ожидании',
+  2: 'Завершён успешно',
+  3: 'Отменён'
+}
+
+export const cashoutStatuses = {
+  pending: 1,
+  succesful: 2,
+  canceled: 3
+}
+
+const months = {
+  1: 'Январь',
+  2: 'Февраль',
+  3: 'Март',
+  4: 'Апрель',
+  5: 'Май',
+  6: 'Июнь',
+  7: 'Июль',
+  8: 'Август',
+  9: 'Сентябрь',
+  10: 'Октябрь',
+  11: 'Ноябрь',
+  12: 'Декабрь',
+}

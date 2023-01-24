@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import { Card, CardContent, Link } from '@mui/material';
-import { Account } from '../../../types/accounts';
+import { AccountFromServer } from '../../../types/accounts';
 import { Link as RouterLink } from 'react-router-dom';
 
 interface IAccountCardProps {
-  account: Account;
+  account: AccountFromServer;
 }
 
 const shiftColors: { [key: number]: string } = {

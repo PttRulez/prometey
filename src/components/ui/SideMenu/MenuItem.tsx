@@ -63,7 +63,7 @@ const SimpleMenuItem: FC<{ item: IMenuItem }> = ({ item }) => {
 
   return (
     // <ListItem>
-    <IListItemButton component={NavLink} to={link!} sx={{ paddingY: 2 }}>
+    <IListItemButton component={NavLink} to={link!} sx={{ paddingY: 2 }} end>
       <IListItemIcon>
         {Muicon[iconName as keyof typeof Muicon] &&
           React.createElement(Muicon[iconName as keyof typeof Muicon])}

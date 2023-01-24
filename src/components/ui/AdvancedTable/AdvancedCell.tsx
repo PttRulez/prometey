@@ -16,7 +16,7 @@ const AdvancedCell: FC<AdvancedCellProps> = ({ column, row, value }) => {
   }
 
   if (column.render) {
-    renderedValue = column.render(value, row);
+    renderedValue = column.render(renderedValue, row);
   }
 
   return (

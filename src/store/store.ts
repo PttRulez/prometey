@@ -7,21 +7,7 @@ import contractsSlice from './contractsSlice';
 import selectListsSlice from './selectListsSlice';
 import apiSlice from '../api/apiSlice';
 import bobIdsSlice from './bobIdsSlice';
-
-// export const rtkQueryErrorLogger: Middleware = (api: MiddlewareAPI) => (
-//   next
-// ) => (action) => {
-//   // RTK Query uses `createAsyncThunk` from redux-toolkit under the hood, so we're able to utilize these matchers!
-//   console.log('Fignya', action);
-//   if (isRejected(action)) {
-//     console.log('Rejected');
-//   }
-//   if (isRejectedWithValue(action)) {
-//     console.warn('We got a rejected action!', action);
-//   }
-//
-//   return next(action);
-// };
+import filtersSlice from './filtersSlice';
 
 export const store = configureStore({
   reducer: {
@@ -29,6 +15,7 @@ export const store = configureStore({
     auth: authSlice,
     bobIds: bobIdsSlice,
     contracts: contractsSlice,
+    filters: filtersSlice,
     networks: networksSlice,
     notification: notificationSlice,
     selectLists: selectListsSlice,

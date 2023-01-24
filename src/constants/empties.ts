@@ -1,6 +1,9 @@
 import { ContractInForm } from '../types/contracts';
 import { ProfileInForm } from '../types/profiles';
 import { BobId, BobIdFilters } from '../types/bobIds';
+import { Account } from '../types/accounts';
+import { CashierFilters, Cashout, Deposit } from '../types/cashier';
+import { cashoutStatuses } from './common';
 
 export const emptyContract: ContractInForm = {
   id: null,
@@ -30,4 +33,54 @@ export const emptyBobId: BobId = {
   limits: [],
   network_id: '',
   profile_id: '',
+};
+
+export const emptyCashout: Cashout = {
+  account_id: 0,
+  amount: 0,
+  id: 0,
+  status_id: cashoutStatuses.pending,
+  type_id: 1,
+  ordered_date: '',
+  left_balance_date: ''
+}
+
+export const emptyCashierFilters: CashierFilters = {
+  category: "both",
+  month: '',
+  network_id: '',
+  wait: true,
+  year: ''
+};
+
+export const emptyDeposit: Deposit = {
+  id: 0,
+  account_id: 0,
+  amount: '',
+  reached_balance_date: '',
+  comment: ''
+}
+
+export const emptyAccount: Account = {
+  affiliate_id: '',
+  bob_id: '',
+  bob_id_id: '',
+  brain_id: '',
+  comment: '',
+  creation_date: '',
+  currency_id: '',
+  disciplines: [],
+  id: 0,
+  info: '',
+  limits: [],
+  limits_group: [],
+  login: '',
+  nickname: '',
+  password: '',
+  person_id: '',
+  profile_id: '',
+  proxy_id: '',
+  room_id: '',
+  shift_id: '',
+  status_id: '',
 };

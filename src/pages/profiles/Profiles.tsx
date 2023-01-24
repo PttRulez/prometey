@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import BasicTable from '../../components/ui/BasicTable/BasicTable';
 import BasicTableHeader from '../../components/ui/BasicTable/BasicTableHeader';
 import {
@@ -19,7 +19,6 @@ import { profileFormProps, ProfileInForm } from '../../types/profiles';
 import { emptyProfile } from '../../constants/empties';
 import { pick } from 'lodash';
 import { useAppDispatch } from '../../hooks/redux';
-import { fetchContracts } from '../../store/contractsSlice';
 import ProfileForm from './ProfileForm';
 import { useGetProfilesQuery } from '../../api/profilesApiSlice';
 
@@ -30,9 +29,9 @@ const Profiles: FC = () => {
   );
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    dispatch(fetchContracts());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchContracts());
+  // }, [dispatch]);
 
   return (
     <>
@@ -99,7 +98,7 @@ const Profiles: FC = () => {
         {editedProfile && (
           <ProfileForm
             profile={editedProfile!}
-            afterSuccesfulSubmit={() => setEditedProfile(null)}
+            closeForm={() => setEditedProfile(null)}
           />
         )}
       </Dialog>

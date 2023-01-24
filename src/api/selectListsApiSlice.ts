@@ -6,7 +6,17 @@ export const selectListsApiSlice = apiSlice.injectEndpoints({
       query: () => '/profiles/get-all-lists',
       providesTags: ['ProfilesSelectList'],
     }),
+    getProxiesList: build.query<any, { room_id: number; account_id: number }>({
+      query: (params) => ({
+        url: '/get-proxies-for-room',
+        params,
+      }),
+      providesTags: ['ProxiesList'],
+    }),
   }),
 });
 
-export const { useGetProfilesListsQuery } = selectListsApiSlice;
+export const {
+  useLazyGetProxiesListQuery,
+  useGetProfilesListsQuery,
+} = selectListsApiSlice;

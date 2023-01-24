@@ -21,6 +21,7 @@ export const profileFormProps = [
   'name',
   'limits',
   'disciplines',
+  'shift_id'
 ];
 
 export type ProfileInForm = Omit<
@@ -33,5 +34,6 @@ export interface ProfileFromServer extends Profile {
     active_accounts: Account[];
     accounts?: Account[];
   };
+  accounts: Account[];
   contract: Omit<ContractFromServer, 'profile'> & { network: Network };
 }

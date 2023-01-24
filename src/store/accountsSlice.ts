@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Account, TimetableFilters } from '../types/accounts';
+import { Account, AccountsFilters, TimetableFilters } from '../types/accounts';
 import AccountsService from '../services/AccountsService';
 import { RootState } from './store';
 import { accountsInitialState } from './initialState';
@@ -57,6 +57,9 @@ const authSlice = createSlice({
   reducers: {
     setTimetableFilters: (state, action: PayloadAction<TimetableFilters>) => {
       state.timeTableFilters = action.payload;
+    },
+    setAccountsFilters: (state, action: PayloadAction<AccountsFilters>) => {
+      state.accountsFilters = action.payload;
     },
   },
   extraReducers(builder) {

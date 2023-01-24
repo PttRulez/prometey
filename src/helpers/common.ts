@@ -1,11 +1,25 @@
-import { SelectList, SelectOption, SomeObject } from '../types/common';
+import {
+  MuiDataGridSelectOption,
+  SelectList,
+  SelectOption,
+  SomeObject,
+} from '../types/common';
 import routes from '../router/routes';
 
 export const getOptionsList = (obj: SelectList): SelectOption[] => {
   return Object.entries(obj).reduce((acc, cur) => {
+    acc.push({ id: Number(cur[0]), name: cur[1] });
+    return acc;
+  }, [] as SelectOption[]);
+};
+
+export const getMuiOptionsList = (
+  obj: SelectList
+): MuiDataGridSelectOption[] => {
+  return Object.entries(obj).reduce((acc, cur) => {
     acc.push({ value: Number(cur[0]), label: cur[1] });
     return acc;
-  }, [] as { value: number; label: string }[]);
+  }, [] as MuiDataGridSelectOption[]);
 };
 
 export const getSelectList = (

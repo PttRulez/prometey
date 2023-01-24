@@ -7,7 +7,7 @@ interface FormTextInputProps extends TextInputProps {
   name: string;
 }
 
-const FormTextInput: FC<FormTextInputProps> = ({
+const FormText: FC<FormTextInputProps> = ({
   control,
   name,
   onChange,
@@ -32,4 +32,4 @@ const FormTextInput: FC<FormTextInputProps> = ({
   );
 };
 
-export default FormTextInput;
+export default FormText;

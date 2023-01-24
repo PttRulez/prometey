@@ -1,4 +1,5 @@
 import { User } from './users';
+import { CashierFilters } from './cashier';
 
 export interface AuthState {
   authenticated: boolean;
@@ -21,4 +22,8 @@ export interface AuthResponse {
 
 export interface GetProfileResponse {
   user: User;
+}
+
+export interface FiltersState {
+  cashier: CashierFilters;
 }

@@ -15,6 +15,7 @@ export interface SelectProps {
   handleClear: () => void;
   onChange?: (e: SelectChangeEvent) => void;
   label: string;
+  labelPropName?: string;
   options: SelectList | SelectOption[];
   value: any;
   sx: SxProp;
@@ -25,12 +26,14 @@ const SelectInput: FC<SelectProps> = ({
   handleClear,
   onChange,
   label,
+  labelPropName = 'name',
   options,
   value,
   variant = 'standard',
   sx,
   ...otherProps
 }) => {
+  // console.log('options', options);
   return (
     <FormControl sx={sx} fullWidth {...otherProps}>
       <InputLabel id={label}>{label}</InputLabel>
@@ -54,12 +57,13 @@ const SelectInput: FC<SelectProps> = ({
             </IconButton>
           </InputAdornment>
         }
+        sx={{ paddingLeft: '20px' }}
         variant={variant}
       >
         {Array.isArray(options)
           ? options.map((option) => (
-              <MenuItem value={option.value} key={option.value}>
-                {option.label}
+              <MenuItem value={option.id} key={option.id}>
+                {option[labelPropName]}
               </MenuItem>
             ))
           : Object.entries(options)

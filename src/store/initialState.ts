@@ -2,9 +2,9 @@ import { AccountsState } from '../types/accounts';
 import { Network, NetworkState } from '../types/networks';
 import { Contract, ContractsState } from '../types/contracts';
 import { SelectListsState } from '../types/common';
-import { AuthState } from '../types/auth';
+import { AuthState, FiltersState } from '../types/auth';
 import { BobIdsState } from '../types/bobIds';
-import { emptyBobIdFilters } from '../constants/empties';
+import { emptyBobIdFilters, emptyCashierFilters } from '../constants/empties';
 
 const bearerToken = localStorage.getItem('bearerToken');
 
@@ -19,6 +19,10 @@ export const emptyAuthState: AuthState = {
   ...authInitialState,
   bearerToken: null,
 };
+
+export const emptyFiltersState: FiltersState = {
+  cashier: emptyCashierFilters,
+}
 
 export const accountsInitialState: AccountsState = {
   timetable: { affiliateList: {}, models: {}, networkList: {} },
