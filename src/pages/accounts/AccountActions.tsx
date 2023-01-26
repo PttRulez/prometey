@@ -25,7 +25,9 @@ const AccountActions: FC<{
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async () =>
+
+  {
     try {
       setLoading(true);
       await AccountsService.updateAccount(params.row);

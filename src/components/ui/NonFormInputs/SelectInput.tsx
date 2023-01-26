@@ -12,7 +12,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import { SelectList, SelectOption, SxProp } from '../../../types/common';
 
 export interface SelectProps {
-  handleClear: () => void;
+  handleClear?: () => void;
   onChange?: (e: SelectChangeEvent) => void;
   label: string;
   labelPropName?: string;
@@ -21,6 +21,7 @@ export interface SelectProps {
   sx: SxProp;
   variant?: 'standard' | 'filled' | 'outlined' | undefined;
 }
+
 // onChange field
 const SelectInput: FC<SelectProps> = ({
   handleClear,
@@ -34,6 +35,28 @@ const SelectInput: FC<SelectProps> = ({
   ...otherProps
 }) => {
   // console.log('options', options);
+  const conditionalProps = () => {
+    const props: any = {};
+
+    if (handleClear) {
+      props.endAdorement = (
+        <InputAdornment
+          position={'end'}
+          sx={{
+            display: value ? '' : 'none',
+            position: 'absolute',
+            right: '25px',
+          }}
+        >
+          <IconButton onClick={handleClear}>
+            <ClearIcon />
+          </IconButton>
+        </InputAdornment>
+      );
+    }
+    return props;
+  };
+
   return (
     <FormControl sx={sx} fullWidth {...otherProps}>
       <InputLabel id={label}>{label}</InputLabel>
@@ -43,22 +66,9 @@ const SelectInput: FC<SelectProps> = ({
         value={value}
         label={label}
         onChange={onChange}
-        endAdornment={
-          <InputAdornment
-            position={'end'}
-            sx={{
-              display: value ? '' : 'none',
-              position: 'absolute',
-              right: '25px',
-            }}
-          >
-            <IconButton onClick={handleClear}>
-              <ClearIcon />
-            </IconButton>
-          </InputAdornment>
-        }
         sx={{ paddingLeft: '20px' }}
         variant={variant}
+        {...conditionalProps()}
       >
         {Array.isArray(options)
           ? options.map((option) => (

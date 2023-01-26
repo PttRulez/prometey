@@ -22,10 +22,12 @@ const apiSlice = createApi({
     'Cashouts',
     'Contracts',
     'Deposits',
+    'NetworkList',
     'Profiles',
     'ProfilesSelectList',
     'ProxiesList',
     'preparedAccountFormData',
+    'Report',
   ],
   endpoints: (builder) => ({}),
 });

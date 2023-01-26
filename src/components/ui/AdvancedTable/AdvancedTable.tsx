@@ -13,22 +13,23 @@ import AdvancedCell from './AdvancedCell';
 
 type Align = 'left' | 'right' | 'center' | 'inherit' | 'justify';
 
-export interface AdvancedTableColumn {
-  name: string;
+export interface AdvancedTableColumn<T = { [key: string] : any}> {
+  align?: Align;
+  format?: (value: any, row: T) => any;
   label: string;
   minWidth?: number;
-  align?: Align;
-  format?: (value: any, row: { [key: string]: any }) => any;
-  render?: (value: any, row: { [key: string]: any }) => ReactNode;
+  name: string;
+  render?: (value: any, row: T) => ReactNode;
 }
 
 interface AdvancedTableProps {
   columns: AdvancedTableColumn[];
-  rows: { [key: string]: any }[];
+  rows: { [key: string] : any}[];
   sx?: SxProp;
+  rowSx?: (row: { [key: string] : any}) => SxProp
 }
 
-const AdvancedTable: FC<AdvancedTableProps> = ({ columns, rows, sx }) => {
+const AdvancedTable: FC<AdvancedTableProps> = ({ columns, rows, rowSx, sx }) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -74,7 +75,7 @@ const AdvancedTable: FC<AdvancedTableProps> = ({ columns, rows, sx }) => {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id} sx={rowSx ? rowSx(row) : {}}>
                     {columns.map((column) => (
                       <AdvancedCell
                         column={column}

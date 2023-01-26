@@ -1,4 +1,4 @@
-import { Account } from './accounts';
+import { Account, AccountFromServer } from './accounts';
 
 export interface Cashout {
   account_id: number;
@@ -11,7 +11,7 @@ export interface Cashout {
 }
 
 export interface CashoutFromServer extends Cashout {
-  account: Account;
+  account: AccountFromServer;
   comesBackIfCanceled: boolean;
   createdBy: string;
   goesFromMain: boolean;
@@ -27,6 +27,7 @@ export interface Deposit {
   id: number;
   account_id: number;
   amount: string;
+  ordered_date: string;
   reached_balance_date: string;
   comment: string | null;
 }
@@ -39,9 +40,10 @@ export interface DepositFromServer extends Deposit {
 // const STATUSES = [''success', 'error'] as const
 // type Statuses = typeof STATUSES[number]
 
+export type CashierCategoryValue = 'both' | 'deposits' | 'cashouts';
 
 export interface CashierFilters {
-  category: 'both' | 'deposits' | 'cashouts';
+  category: CashierCategoryValue
   month: number | '';
   network_id: number | '';
   wait: boolean;

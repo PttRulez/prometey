@@ -5,7 +5,6 @@ export const cashierApiSlice = apiSlice.injectEndpoints({
   endpoints: (build) => ({
     getCashier: build.query<any, CashierFilters>({
       query: (filters: CashierFilters) => {
-        console.log('filters zz', filters);
         return {
           url: '/cashier',
           method: 'POST',

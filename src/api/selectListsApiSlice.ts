@@ -1,7 +1,12 @@
 import apiSlice from './apiSlice';
+import { SelectList } from '../types/common';
 
 export const selectListsApiSlice = apiSlice.injectEndpoints({
   endpoints: (build) => ({
+    getNetworkList: build.query<SelectList, void>({
+      query: () => '/get-network-list',
+      providesTags: ['NetworkList'],
+    }),
     getProfilesLists: build.query<any, void>({
       query: () => '/profiles/get-all-lists',
       providesTags: ['ProfilesSelectList'],
@@ -19,4 +24,5 @@ export const selectListsApiSlice = apiSlice.injectEndpoints({
 export const {
   useLazyGetProxiesListQuery,
   useGetProfilesListsQuery,
+    useGetNetworkListQuery
 } = selectListsApiSlice;

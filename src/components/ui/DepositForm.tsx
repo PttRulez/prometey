@@ -13,6 +13,7 @@ import VerticalForm from './Forms/VerticalForm';
 import { Button, Typography } from '@mui/material';
 import FormText from './Forms/FormText';
 import FormDatePicker from './Forms/FormDatePicker';
+import { pick } from 'lodash';
 
 interface Props {
   account: Account;
@@ -37,12 +38,13 @@ const DepositForm: FC<Props> = ({
 
   const onSubmit = async (formData: Deposit) => {
     console.log('submitted Deposit', formData);
+    const dataToSend = pick(formData, ['id', 'account_id', 'amount', 'comment', 'ordered_date', 'reached_balance_date' ]) as Deposit;
 
     try {
-      if (formData.id) {
-        await updateDeposit(formData).unwrap();
+      if (dataToSend.id) {
+        await updateDeposit(dataToSend).unwrap();
       } else {
-        await createDeposit(formData).unwrap();
+        await createDeposit(dataToSend).unwrap();
       }
 
       afterSuccesfulSubmit();

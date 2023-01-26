@@ -33,7 +33,7 @@ export type AccountFromServer = Account & {
   brain: { id: number; name: string };
   created_by: number;
   profile: Profile;
-  room?: Room & { network: Network };
+  room: Room & { network: Network };
   status_id: number;
 };
 

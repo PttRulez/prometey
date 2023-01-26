@@ -4,7 +4,11 @@ import { Contract, ContractsState } from '../types/contracts';
 import { SelectListsState } from '../types/common';
 import { AuthState, FiltersState } from '../types/auth';
 import { BobIdsState } from '../types/bobIds';
-import { emptyBobIdFilters, emptyCashierFilters } from '../constants/empties';
+import {
+  emptyBobIdFilters,
+  emptyCashierFilters,
+  emptyReportFilters,
+} from '../constants/empties';
 
 const bearerToken = localStorage.getItem('bearerToken');
 
@@ -22,6 +26,7 @@ export const emptyAuthState: AuthState = {
 
 export const emptyFiltersState: FiltersState = {
   cashier: emptyCashierFilters,
+  report: emptyReportFilters
 }
 
 export const accountsInitialState: AccountsState = {

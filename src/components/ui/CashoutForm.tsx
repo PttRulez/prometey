@@ -13,6 +13,7 @@ import {
 import { useAppDispatch } from '../../hooks/redux';
 import { openNotification } from '../../store/notificationSlice';
 import { AxiosError } from 'axios';
+import { pick } from 'lodash';
 
 interface Props {
   account: Account;
@@ -36,30 +37,42 @@ const CashoutForm: FC<Props> = ({
   const [updateCashout] = useUpdateCashoutMutation();
 
   const onSubmit = async (formData: Cashout) => {
-      try {
-        if (formData.id) {
-          await updateCashout(formData).unwrap();
-        } else {
-          await createCashout(formData).unwrap();
-        }
+    const dataToSend: Cashout = pick<Cashout>(formData, [
+      'id',
+      'amount',
+      'account_id',
+      'status_id',
+      'type_id',
+      'ordered_date',
+      'left_balance_date',
+      'canceled_date',
+    ]) as Cashout;
 
-        afterSuccesfulSubmit();
-
-        dispatch(
-          openNotification({
-            type: 'success',
-            text: 'Кэшаут сохранился',
-          })
-        );
-      } catch (e) {
-        dispatch(
-          openNotification({
-            error: e as AxiosError,
-            type: 'error',
-            text: 'Траблы с кэшаутом',
-          })
-        );
+    try {
+      if (dataToSend.id) {
+        await updateCashout(dataToSend);
+      } else {
+        await createCashout(dataToSend);
       }
+
+      afterSuccesfulSubmit();
+
+      dispatch(
+        openNotification({
+          type: 'success',
+          text: 'Кэшаут сохранился',
+        })
+      );
+    } catch (e) {
+        console.log('Error cashout saving e:', e);
+      dispatch(
+        openNotification({
+          error: e as AxiosError,
+          type: 'error',
+          text: 'Траблы с кэшаутом',
+        })
+      );
+    }
   };
 
   return (

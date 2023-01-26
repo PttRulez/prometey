@@ -4,6 +4,8 @@ import { BobId, BobIdFilters } from '../types/bobIds';
 import { Account } from '../types/accounts';
 import { CashierFilters, Cashout, Deposit } from '../types/cashier';
 import { cashoutStatuses } from './common';
+import moment from 'moment';
+import { ReportFilters } from '../types/report';
 
 export const emptyContract: ContractInForm = {
   id: null,
@@ -57,8 +59,17 @@ export const emptyDeposit: Deposit = {
   id: 0,
   account_id: 0,
   amount: '',
+  ordered_date: '',
   reached_balance_date: '',
   comment: ''
+}
+
+export const emptyReportFilters: ReportFilters = {
+    nickname: '',
+    year: String(moment().year()),
+    month: String(moment().month() + 1),
+    network_id: '',
+    brain_id: '',
 }
 
 export const emptyAccount: Account = {
