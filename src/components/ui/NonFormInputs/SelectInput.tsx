@@ -17,8 +17,9 @@ export interface SelectProps {
   label: string;
   labelPropName?: string;
   options: SelectList | SelectOption[];
+  sortItems?: boolean;
   value: any;
-  sx: SxProp;
+  sx?: SxProp;
   variant?: 'standard' | 'filled' | 'outlined' | undefined;
 }
 
@@ -29,34 +30,12 @@ const SelectInput: FC<SelectProps> = ({
   label,
   labelPropName = 'name',
   options,
+  sortItems = true,
   value,
   variant = 'standard',
   sx,
   ...otherProps
 }) => {
-  // console.log('options', options);
-  const conditionalProps = () => {
-    const props: any = {};
-
-    if (handleClear) {
-      props.endAdorement = (
-        <InputAdornment
-          position={'end'}
-          sx={{
-            display: value ? '' : 'none',
-            position: 'absolute',
-            right: '25px',
-          }}
-        >
-          <IconButton onClick={handleClear}>
-            <ClearIcon />
-          </IconButton>
-        </InputAdornment>
-      );
-    }
-    return props;
-  };
-
   return (
     <FormControl sx={sx} fullWidth {...otherProps}>
       <InputLabel id={label}>{label}</InputLabel>
@@ -68,7 +47,24 @@ const SelectInput: FC<SelectProps> = ({
         onChange={onChange}
         sx={{ paddingLeft: '20px' }}
         variant={variant}
-        {...conditionalProps()}
+        endAdornment={
+          value && handleClear ? (
+            <InputAdornment
+              position={'end'}
+              sx={{
+                display: value ? '' : 'none',
+                position: 'absolute',
+                right: '25px',
+              }}
+            >
+              <IconButton onClick={handleClear}>
+                <ClearIcon />
+              </IconButton>
+            </InputAdornment>
+          ) : (
+            ''
+          )
+        }
       >
         {Array.isArray(options)
           ? options.map((option) => (
@@ -76,13 +72,19 @@ const SelectInput: FC<SelectProps> = ({
                 {option[labelPropName]}
               </MenuItem>
             ))
-          : Object.entries(options)
+          : sortItems
+          ? Object.entries(options)
               .sort((a, b) => a[1].localeCompare(b[1], 'ru', { numeric: true }))
               .map(([key, value]) => (
                 <MenuItem value={key} key={value}>
                   {value}
                 </MenuItem>
-              ))}
+              ))
+          : Object.entries(options).map(([key, value]) => (
+              <MenuItem value={key} key={value}>
+                {value}
+              </MenuItem>
+            ))}
       </MuiSelect>
     </FormControl>
   );

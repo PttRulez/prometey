@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { ProfileInForm } from '../../types/profiles';
-import VerticalForm from '../../components/ui/Forms/VerticalForm';
+import VerticalForm from '../../components/styled/VerticalForm';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch } from '../../hooks/redux';
 import FormText from '../../components/ui/Forms/FormText';

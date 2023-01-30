@@ -1,21 +1,38 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CashierFilters } from '../types/cashier';
-import { emptyFiltersState } from './initialState';
+import { filtersInitialState } from './initialState';
 import { ReportFilters } from '../types/report';
+import { AccountsFilters, TimetableFilters } from '../types/accounts';
+import { BobIdFilters } from '../types/bobIds';
 
 const filtersSlice = createSlice({
   name: 'filters',
-  initialState: emptyFiltersState,
+  initialState: filtersInitialState,
   reducers: {
+    setAccountsFilters: (state, action: PayloadAction<AccountsFilters>) => {
+      state.accounts = action.payload;
+    },
+    setBobIdFilters: (state, { payload }: PayloadAction<BobIdFilters>) => {
+      state.bobIds = payload;
+    },
     setCashierFilters: (state, action: PayloadAction<CashierFilters>) => {
       state.cashier = action.payload;
     },
     setReportFilters: (state, action: PayloadAction<ReportFilters>) => {
       state.report = action.payload;
     },
+    setTimetableFilters: (state, action: PayloadAction<TimetableFilters>) => {
+      state.timetable = action.payload;
+    },
   },
 });
 
-export const { setCashierFilters, setReportFilters } = filtersSlice.actions;
+export const {
+  setAccountsFilters,
+  setBobIdFilters,
+  setCashierFilters,
+  setTimetableFilters,
+  setReportFilters,
+} = filtersSlice.actions;
 
 export default filtersSlice.reducer;

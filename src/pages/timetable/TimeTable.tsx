@@ -1,17 +1,13 @@
-import { FC, useLayoutEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { fetchTimeTable } from '../../store/accountsSlice';
+import { FC } from 'react';
+import { useAppSelector } from '../../hooks/redux';
 import { Box } from '@mui/material';
 import Network from './components/Network';
 import TimetableFilters from './components/TimetableFilters';
+import { useGetTimetableQuery } from '../../api/accountApiSlice';
 
 const TimeTable: FC = () => {
-  const dispatch = useAppDispatch();
-  const { models } = useAppSelector((state) => state.accounts.timetable);
-
-  useLayoutEffect(() => {
-    dispatch(fetchTimeTable());
-  }, [dispatch]);
+  const timeTableFilters = useAppSelector((state) => state.filters.timetable);
+  const { data: models } = useGetTimetableQuery(timeTableFilters);
 
   return (
     <Box sx={{ margin: 'auto' }}>

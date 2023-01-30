@@ -1,5 +1,5 @@
-import { FC, useEffect, useMemo, useState } from 'react';
-import { useLazyGetBobIdsQuery } from '../../api/bobIdsApiSlice';
+import { FC, useMemo, useState } from 'react';
+import { useGetBobIdsQuery } from '../../api/bobIdsApiSlice';
 import { useAppSelector } from '../../hooks/redux';
 import BobIdFilters from './BobIdFilters';
 import AdvancedTable, {
@@ -14,13 +14,9 @@ import { emptyBobId } from '../../constants/empties';
 import BobIdForm from './BobIdForm';
 
 const BobIds: FC = () => {
-  const [fetchBobIds, result] = useLazyGetBobIdsQuery();
-  const bobIdFilters = useAppSelector((state) => state.bobIds.filters);
+  const bobIdFilters = useAppSelector((state) => state.filters.bobIds);
+  const { data: bobIdsResponse } = useGetBobIdsQuery(bobIdFilters);
   const [editedBobId, setEditedBobId] = useState<BobId | null>(null);
-
-  useEffect(() => {
-    fetchBobIds(bobIdFilters);
-  }, [fetchBobIds, bobIdFilters]);
 
   const columns: AdvancedTableColumn[] = useMemo(() => {
     return [
@@ -65,7 +61,7 @@ const BobIds: FC = () => {
       <BobIdFilters sx={{ marginBottom: '20px' }} />
       <AdvancedTable
         columns={columns}
-        rows={result.data?.bobIds ?? []}
+        rows={bobIdsResponse?.bobIds ?? []}
         sx={{ maxHeight: '80vh' }}
       />
       <AddNewButton

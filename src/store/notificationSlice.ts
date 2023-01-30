@@ -1,30 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AxiosError } from 'axios';
 import { notificationText } from '../constants/common';
-
-export type NotificationType = 'success' | 'error';
-
-export interface NotificationState {
-  open: boolean;
-  type: NotificationType;
-  text?: string | string[];
-}
-
-export interface ActionOpenNotification {
-  type: NotificationType;
-  text?: string | string[];
-  error?: AxiosError | null;
-}
-
-const initialState: NotificationState = {
-  open: false,
-  type: 'success',
-  text: '',
-};
+import { notificationInitialState } from './initialState';
+import { ActionOpenNotification } from '../types/notifications';
 
 const notificationSlice = createSlice({
   name: 'notification',
-  initialState,
+  initialState: notificationInitialState,
   reducers: {
     openNotification(state, action: PayloadAction<ActionOpenNotification>) {
       let { error, text, type } = action.payload;

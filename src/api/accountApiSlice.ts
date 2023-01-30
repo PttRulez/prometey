@@ -1,10 +1,25 @@
 import apiSlice from './apiSlice';
-import { Account, AccountFromServer, AccountsFilters } from '../types/accounts';
+import {
+  Account,
+  AccountFromServer,
+  AccountsFilters,
+  TimetableFilters,
+} from '../types/accounts';
 import { SelectList } from '../types/common';
 import { ProfileFromServer } from '../types/profiles';
 
 export const accountApiSlice = apiSlice.injectEndpoints({
   endpoints: (build) => ({
+    getTimetable: build.query<any, TimetableFilters>({
+      query: (filters) => {
+        return {
+          url: '/accounts/timetable',
+          method: 'GET',
+          params: { filters: JSON.stringify(filters) },
+        };
+      },
+      providesTags: ['Timetable'],
+    }),
     getAccounts: build.query<
       {
         affiliateList: SelectList;
@@ -60,6 +75,7 @@ export const accountApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useGetAccountsQuery,
+  useGetTimetableQuery,
   usePrepareFormDataQuery,
   useCreateAccountMutation,
   useUpdateAccountMutation,

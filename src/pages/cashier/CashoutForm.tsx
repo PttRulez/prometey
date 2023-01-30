@@ -1,11 +1,11 @@
 import { FC } from 'react';
-import VerticalForm from './Forms/VerticalForm';
+import VerticalForm from '../../components/styled/VerticalForm';
 import { useForm } from 'react-hook-form';
 import { Cashout } from '../../types/cashier';
-import FormText from './Forms/FormText';
+import FormText from '../../components/ui/Forms/FormText';
 import { Account } from '../../types/accounts';
 import { Button, Typography } from '@mui/material';
-import FormDatePicker from './Forms/FormDatePicker';
+import FormDatePicker from '../../components/ui/Forms/FormDatePicker';
 import {
   useCreateCashoutMutation,
   useUpdateCashoutMutation,

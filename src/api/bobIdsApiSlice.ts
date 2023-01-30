@@ -1,9 +1,13 @@
 import apiSlice from './apiSlice';
 import { BobId, BobIdFilters, BobIdFromServer } from '../types/bobIds';
+import { SelectList } from '../types/common';
 
 export const bobIdsApiSlice = apiSlice.injectEndpoints({
   endpoints: (build) => ({
-    getBobIds: build.query<{ bobIds: BobIdFromServer[] }, BobIdFilters>({
+    getBobIds: build.query<
+      { bobIds: BobIdFromServer[]; networkList: SelectList },
+      BobIdFilters
+    >({
       query: (filters) => {
         return {
           url: '/bob-ids',

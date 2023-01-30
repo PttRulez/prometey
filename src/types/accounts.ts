@@ -47,17 +47,15 @@ export interface TimetableFilters {
 }
 
 export interface AccountsState {
-  accountsFilters: AccountsFilters;
   timetable: AccountsResponse;
-  timeTableFilters: TimetableFilters;
   accountsPage: AccountsResponse;
 }
 
 export interface AccountsFilters {
-  affiliate_id: string;
+  affiliate_id: number | '';
   bob_id: string;
   login: string;
-  network_id: string;
+  network_id: number | '';
   nickname: string;
 }
 

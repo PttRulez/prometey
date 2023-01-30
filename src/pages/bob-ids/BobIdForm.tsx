@@ -1,12 +1,15 @@
 import { FC, useEffect, useState } from 'react';
 import { BobId } from '../../types/bobIds';
-import VerticalForm from '../../components/ui/Forms/VerticalForm';
+import VerticalForm from '../../components/styled/VerticalForm';
 import FormText from '../../components/ui/Forms/FormText';
 import { useForm } from 'react-hook-form';
 import FormSelect from '../../components/ui/Forms/FormSelect';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { useAppDispatch } from '../../hooks/redux';
 import { Button, FormGroup, SelectChangeEvent } from '@mui/material';
-import { useGetProfilesListsQuery } from '../../api/selectListsApiSlice';
+import {
+  useGetNetworkListQuery,
+  useGetProfilesListsQuery,
+} from '../../api/selectListsApiSlice';
 import { SelectList } from '../../types/common';
 import { Profile, ProfileFromServer } from '../../types/profiles';
 import { existingDisciplines, existinglimits } from '../../constants/common';
@@ -41,9 +44,7 @@ const BobIdForm: FC<Props> = ({ bobId, afterSuccesfulSubmit }) => {
     defaultValues: bobId,
   });
 
-  const networksList = useAppSelector(
-    (state) => state.selectLists.networksList
-  );
+  const { data: networksList } = useGetNetworkListQuery();
 
   const watchAll = watch();
 
@@ -147,7 +148,7 @@ const BobIdForm: FC<Props> = ({ bobId, afterSuccesfulSubmit }) => {
         }}
         label="Сеть"
         name="network_id"
-        options={networksList}
+        options={networksList ?? []}
         value={watchAll.network_id}
       />
       {watchAll.network_id && (

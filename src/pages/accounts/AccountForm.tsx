@@ -30,7 +30,7 @@ import FormDatePicker from '../../components/ui/Forms/FormDatePicker';
 import { useLazyGetProxiesListQuery } from '../../api/selectListsApiSlice';
 import { Discipline, Limit } from '../../types/other';
 import CheckboxInput from '../../components/ui/NonFormInputs/CheckboxInput';
-import { ProfileFromServer, ProfileInForm } from '../../types/profiles';
+import { ProfileFromServer } from '../../types/profiles';
 import { useAppDispatch } from '../../hooks/redux';
 import { openNotification } from '../../store/notificationSlice';
 import { AxiosError } from 'axios';
@@ -54,9 +54,6 @@ const AccountForm: FC<AccountFormProps> = ({
   });
   const watchAll = watch();
 
-  const [editedProfile, setEditedProfile] = useState<ProfileInForm | null>(
-    null
-  );
   const [profileList, setProfileList] = useState<SelectOption[] | []>([]);
   const [limitsToChooseFrom, setLimitsToChooseFrom] = useState<Limit[]>(
     existinglimits

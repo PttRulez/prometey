@@ -22,15 +22,16 @@ import AccountForm from './AccountForm';
 import { useGetAccountsQuery } from '../../api/accountApiSlice';
 import { ProfileInForm } from '../../types/profiles';
 import ProfileForm from '../profiles/ProfileForm';
-import CashoutForm from '../../components/ui/CashoutForm';
-import DepositForm from '../../components/ui/DepositForm';
+import CashoutForm from '../cashier/CashoutForm';
+import DepositForm from '../cashier/DepositForm';
+import AccountsFilters from './AccountsFilters';
+import { useGetNetworkListQuery } from '../../api/selectListsApiSlice';
 
 const Accounts = () => {
-  const accountsFilters = useAppSelector(
-    (state) => state.accounts.accountsFilters
-  );
+  const accountsFilters = useAppSelector((state) => state.filters.accounts);
 
   const { data } = useGetAccountsQuery(accountsFilters);
+  const { data: networkList } = useGetNetworkListQuery();
 
   const [editedAccount, setEditedAccount] = useState<Account | null>(null);
   const [accountToCashout, setAccountToCashout] = useState<Account | null>(
@@ -46,11 +47,6 @@ const Accounts = () => {
   const [editedProfile, setEditedProfile] = useState<ProfileInForm | null>(
     null
   );
-
-  const networkList = useMemo(() => {
-    console.log('useMemo');
-    return data?.networkList ? getMuiOptionsList(data?.networkList) : [];
-  }, [data?.networkList]);
 
   //@ts-ignore
   const columns: GridColDef[] = useMemo(
@@ -80,19 +76,20 @@ const Accounts = () => {
         valueOptions: networkList ?? [],
         valueGetter: (params: GridValueGetterParams) =>
           params.row.room?.network?.id,
-        valueFormatter: ({ id: rowId, value, field, api }) => {
-          // console.log('networks', networks);
-          const colDef = api.getColumn(field);
-          if (value.value) {
-            value = value.value;
-          }
-          const option = colDef.valueOptions.find(
-            // @ts-ignore
-            ({ value: optionValue }) => value === optionValue
-          );
-          // console.log('option', option);
-          return option?.label ?? '';
-        },
+        valueFormatter: ({ value }) => networkList?.[value],
+        // valueFormatter: ({ id: rowId, value, field, api }) => {
+        //   // console.log('networks', networks);
+        //   const colDef = api.getColumn(field);
+        //   if (value.value) {
+        //     value = value.value;
+        //   }
+        //   const option = colDef.valueOptions.find(
+        //     // @ts-ignore
+        //     ({ value: optionValue }) => value === optionValue
+        //   );
+        //   // console.log('option', option);
+        //   return option?.label ?? '';
+        // },
       },
       { field: 'disciplines', headerName: 'Дисциплины', flex: 1 },
       { field: 'limits', headerName: 'Лимиты', flex: 1 },
@@ -171,11 +168,13 @@ const Accounts = () => {
   // });
   return (
     <>
+      <AccountsFilters />
       <DataGrid
         autoHeight
         sx={{
           maxHeight: '80vh',
           '& .MuiDataGrid-main': { overflowY: 'auto' },
+          marginTop: '20px',
         }}
         columns={columns}
         getRowId={(row) => row.id}
@@ -191,10 +190,7 @@ const Accounts = () => {
         // filterModel={filterModel}
         // onFilterModelChange={(newFilterModel) => setFilterModel(newFilterModel)}
       />
-      <AddNewButton
-        onClick={() => setEditedAccount(emptyAccount)}
-        sx={{ bottom: 5 }}
-      />
+      <AddNewButton onClick={() => setEditedAccount(emptyAccount)} />
 
       <Dialog
         open={!!editedAccount}

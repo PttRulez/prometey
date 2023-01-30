@@ -1,7 +1,8 @@
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 import { useAppSelector } from '../../hooks/redux';
 import { useGetReportQuery } from '../../api/reportApiSlice';
 import { DataGrid } from '@mui/x-data-grid';
+import ReportFilters from './ReportFilters';
 
 const Report: FC = () => {
   const reportFilters = useAppSelector((state) => state.filters.report);
@@ -23,17 +24,15 @@ const Report: FC = () => {
     []
   );
 
-  useEffect(() => {
-    console.log('reportData', reportData);
-  }, [reportData]);
-
   return (
     <>
+      <ReportFilters />
       <DataGrid
         autoHeight
         sx={{
           maxHeight: '80vh',
           '& .MuiDataGrid-main': { overflowY: 'auto' },
+          marginTop: '20px',
         }}
         columns={columns}
         getRowId={(row) => row.id}

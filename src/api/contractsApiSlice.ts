@@ -1,5 +1,5 @@
 import apiSlice from './apiSlice';
-import { ContractFromServer } from '../types/contracts';
+import { ContractFromServer, ContractInForm } from '../types/contracts';
 
 export const contractsApiSlice = apiSlice.injectEndpoints({
   endpoints: (build) => ({
@@ -7,25 +7,27 @@ export const contractsApiSlice = apiSlice.injectEndpoints({
       query: () => '/contracts',
       providesTags: ['Contracts'],
     }),
-    // addProfile: build.mutation<ProfileFromServer, ProfileInForm>({
-    //   query: (body: ProfileInForm) => ({
-    //     url: '/profiles',
-    //     method: 'POST',
-    //     body,
-    //   }),
-    //   invalidatesTags: ['Profiles', 'ProfilesSelectList'],
-    // }),
-    // updateProfile: build.mutation<ProfileFromServer, ProfileInForm>({
-    //   query: (body: ProfileInForm) => ({
-    //     url: `/profiles/${body.id}`,
-    //     method: 'PUT',
-    //     body,
-    //   }),
-    //   invalidatesTags: ['Profiles', 'ProfilesSelectList'],
-    // }),
+    addContract: build.mutation<ContractFromServer, ContractInForm>({
+      query: (body: ContractInForm) => ({
+        url: '/contracts',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Contracts'],
+    }),
+    updateContract: build.mutation<ContractFromServer, ContractInForm>({
+      query: (body: ContractInForm) => ({
+        url: `/contracts/${body.id}`,
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: ['Contracts'],
+    }),
   }),
 });
 
 export const {
-  useGetContractsQuery
+  useGetContractsQuery,
+  useAddContractMutation,
+  useUpdateContractMutation,
 } = contractsApiSlice;

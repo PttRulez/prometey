@@ -36,7 +36,6 @@ const TextInput: FC<TextInputProps> = ({
       InputProps={{
         endAdornment: value ? (
           <IconButton
-            aria-label="toggle password visibility"
             onClick={handleClear}
           >
             <ClearIcon />

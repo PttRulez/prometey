@@ -1,11 +1,19 @@
 import { ContractInForm } from '../types/contracts';
 import { ProfileInForm } from '../types/profiles';
 import { BobId, BobIdFilters } from '../types/bobIds';
-import { Account } from '../types/accounts';
+import { Account, AccountsFilters, TimetableFilters } from '../types/accounts';
 import { CashierFilters, Cashout, Deposit } from '../types/cashier';
 import { cashoutStatuses } from './common';
 import moment from 'moment';
 import { ReportFilters } from '../types/report';
+
+export const emptyAccountsFilters: AccountsFilters = {
+  affiliate_id: '',
+  bob_id: '',
+  login: '',
+  network_id: '',
+  nickname: '',
+};
 
 export const emptyContract: ContractInForm = {
   id: null,
@@ -44,15 +52,20 @@ export const emptyCashout: Cashout = {
   status_id: cashoutStatuses.pending,
   type_id: 1,
   ordered_date: '',
-  left_balance_date: ''
-}
+  left_balance_date: '',
+};
 
 export const emptyCashierFilters: CashierFilters = {
-  category: "both",
+  category: 'both',
   month: '',
   network_id: '',
   wait: true,
-  year: ''
+  year: '',
+};
+
+export const emptyTimetableFilters: TimetableFilters = {
+  network_id: '',
+  affiliate_id: '',
 };
 
 export const emptyDeposit: Deposit = {
@@ -61,16 +74,16 @@ export const emptyDeposit: Deposit = {
   amount: '',
   ordered_date: '',
   reached_balance_date: '',
-  comment: ''
-}
+  comment: '',
+};
 
 export const emptyReportFilters: ReportFilters = {
-    nickname: '',
-    year: String(moment().year()),
-    month: String(moment().month() + 1),
-    network_id: '',
-    brain_id: '',
-}
+  nickname: '',
+  year: String(moment().year()),
+  month: String(moment().month() + 1),
+  network_id: '',
+  brain_id: '',
+};
 
 export const emptyAccount: Account = {
   affiliate_id: '',

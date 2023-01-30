@@ -1,10 +1,6 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { IconButton, styled } from '@mui/material';
 import { GridRenderCellParams } from '@mui/x-data-grid';
-import AccountsService from '../../services/AccountsService';
-import { AxiosError } from 'axios';
-import { useAppDispatch } from '../../hooks/redux';
-import { openNotification } from '../../store/notificationSlice';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 
@@ -21,34 +17,34 @@ const AccountActions: FC<{
   rowId: any;
   setRowId: any;
 }> = ({ clickEdit, clickCashout, clickDeposit, params, rowId, setRowId }) => {
-  const dispatch = useAppDispatch();
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
+  // const dispatch = useAppDispatch();
+  // const [loading, setLoading] = useState(false);
+  // const [success, setSuccess] = useState(false);
 
-  const handleSubmit = async () =>
-
-  {
-    try {
-      setLoading(true);
-      await AccountsService.updateAccount(params.row);
-      setSuccess(true);
-
-      setRowId(null);
-      setTimeout(() => {
-        setSuccess(false);
-      }, 1500);
-    } catch (e) {
-      dispatch(
-        openNotification({
-          error: e as AxiosError,
-          type: 'error',
-          text: 'Аккаунт не засэйвился :((',
-        })
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const handleSubmit = async () =>
+  //
+  // {
+  //   try {
+  //     setLoading(true);
+  //     await AccountsService.updateAccount(params.row);
+  //     setSuccess(true);
+  //
+  //     setRowId(null);
+  //     setTimeout(() => {
+  //       setSuccess(false);
+  //     }, 1500);
+  //   } catch (e) {
+  //     dispatch(
+  //       openNotification({
+  //         error: e as AxiosError,
+  //         type: 'error',
+  //         text: 'Аккаунт не засэйвился :((',
+  //       })
+  //     );
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <Actions>

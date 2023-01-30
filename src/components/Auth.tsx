@@ -4,7 +4,6 @@ import AuthService from '../services/AuthService';
 import { logout, setAuth } from '../store/authSlice';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import routes from '../router/routes';
-import { fetchNetworksList } from '../store/selectListsSlice';
 
 const Auth: FC = () => {
   const dispatch = useAppDispatch();
@@ -19,7 +18,6 @@ const Auth: FC = () => {
         dispatch(
           setAuth({ ...authState, authenticated: true, user: res.data })
         );
-        dispatch(fetchNetworksList());
       } catch (err) {
         if (err.response.status === 401) {
           dispatch(logout());

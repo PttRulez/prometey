@@ -1,12 +1,13 @@
 import apiSlice from './apiSlice';
 import { ReportFilters, ReportFromServer } from '../types/report';
+import { SelectList } from '../types/common';
 
 export const reportApiSlice = apiSlice.injectEndpoints({
   endpoints: (build) => ({
     getReport: build.query<
       {
         reports: ReportFromServer[];
-        networkList: any;
+        networkList: SelectList;
       },
       ReportFilters
     >({

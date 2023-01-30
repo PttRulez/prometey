@@ -10,8 +10,8 @@ import { CashoutFromServer, DepositFromServer } from '../../types/cashier';
 import moment from 'moment';
 import CashierFilter from './CashierFilter';
 import { Dialog, IconButton } from '@mui/material';
-import CashoutForm from '../../components/ui/CashoutForm';
-import DepositForm from '../../components/ui/DepositForm';
+import CashoutForm from './CashoutForm';
+import DepositForm from './DepositForm';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
 const Cashier: FC = () => {

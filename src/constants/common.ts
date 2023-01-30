@@ -78,7 +78,7 @@ export const cashoutStatuses = {
   canceled: 3
 }
 
-const months = {
+export const monthList = {
   1: 'Январь',
   2: 'Февраль',
   3: 'Март',

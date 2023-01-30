@@ -2,18 +2,21 @@ import { FC, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import Grid from '@mui/material/Unstable_Grid2';
 import SelectInput from '../../components/ui/NonFormInputs/SelectInput';
-import { ReportFilters } from '../../types/report';
+import { ReportFilters as ReportFiltersType } from '../../types/report';
 import { setReportFilters } from '../../store/filtersSlice';
 import TextInput from '../../components/ui/NonFormInputs/TextInput';
 import moment from 'moment';
 import { SelectList } from '../../types/common';
 import { useGetReportQuery } from '../../api/reportApiSlice';
+import { useGetBrainListQuery } from '../../api/selectListsApiSlice';
+import { monthList } from '../../constants/common';
 
-const ReportFilter: FC = () => {
+const ReportFilters: FC = () => {
   const dispatch = useAppDispatch();
-  const reportFilters: ReportFilters = useAppSelector(
+  const reportFilters: ReportFiltersType = useAppSelector(
     (state) => state.filters.report
   );
+  const { data: brainList } = useGetBrainListQuery();
   const { data: reportData } = useGetReportQuery(reportFilters);
 
   const yearList = useMemo(() => {
@@ -31,13 +34,16 @@ const ReportFilter: FC = () => {
         {/* eslint-disable-next-line react/jsx-no-undef */}
         <TextInput
           handleClear={() =>
-            setReportFilters({ ...reportFilters, nickname: '' })
+            dispatch(setReportFilters({ ...reportFilters, nickname: '' }))
           }
           label="Ник"
           value={reportFilters.nickname}
-          onChange={(e) => {
-            setReportFilters({ ...reportFilters, nickname: e.target.value });
-          }}
+          onChange={(e) =>
+            dispatch(
+              setReportFilters({ ...reportFilters, nickname: e.target.value })
+            )
+          }
+          variant="outlined"
         />
       </Grid>
       <Grid>
@@ -64,13 +70,51 @@ const ReportFilter: FC = () => {
         <SelectInput
           label="Год"
           options={yearList}
-          value={reportFilters.network_id}
+          value={reportFilters.year}
           sx={{ minWidth: 200 }}
           onChange={(e) => {
             dispatch(
               setReportFilters({
                 ...reportFilters,
-                network_id: Number(e.target.value),
+                year: Number(e.target.value),
+              })
+            );
+          }}
+          variant="outlined"
+        />
+      </Grid>
+      <Grid>
+        <SelectInput
+          label="Месяц"
+          options={monthList}
+          sortItems={false}
+          value={reportFilters.month}
+          sx={{ minWidth: 200 }}
+          onChange={(e) => {
+            dispatch(
+              setReportFilters({
+                ...reportFilters,
+                month: Number(e.target.value),
+              })
+            );
+          }}
+          variant="outlined"
+        />
+      </Grid>
+      <Grid>
+        <SelectInput
+          handleClear={() =>
+            dispatch(setReportFilters({ ...reportFilters, brain_id: '' }))
+          }
+          label="Мозг"
+          options={brainList ?? []}
+          value={reportFilters.brain_id}
+          sx={{ minWidth: 200 }}
+          onChange={(e) => {
+            dispatch(
+              setReportFilters({
+                ...reportFilters,
+                brain_id: Number(e.target.value),
               })
             );
           }}
@@ -81,4 +125,4 @@ const ReportFilter: FC = () => {
   );
 };
 
-export default ReportFilter;
+export default ReportFilters;

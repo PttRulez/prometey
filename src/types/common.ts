@@ -1,3 +1,16 @@
+import { CashierFilters } from './cashier';
+import { ReportFilters } from './report';
+import { AccountsFilters, TimetableFilters } from './accounts';
+import { BobIdFilters } from './bobIds';
+
+export interface FiltersState {
+  accounts: AccountsFilters;
+  bobIds: BobIdFilters;
+  cashier: CashierFilters;
+  report: ReportFilters;
+  timetable: TimetableFilters;
+}
+
 export interface SelectList {
   [key: number | string]: string;
 }

@@ -1,22 +1,23 @@
 import { FC, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import Grid from '@mui/material/Unstable_Grid2';
-import { setBobIdFilters } from '../../store/bobIdsSlice';
+import { setBobIdFilters } from '../../store/filtersSlice';
 import SelectInput from '../../components/ui/NonFormInputs/SelectInput';
 import TextInput from '../../components/ui/NonFormInputs/TextInput';
 import useDebounce from '../../hooks/useDebounce';
 import CheckboxInput from '../../components/ui/NonFormInputs/CheckboxInput';
+import { useGetBobIdsQuery } from '../../api/bobIdsApiSlice';
 
 const BobIdFilters: FC<{ [key: string]: any }> = (props) => {
   const dispatch = useAppDispatch();
-  const filters = useAppSelector((state) => state.bobIds.filters);
-  const networkList = useAppSelector((state) => state.selectLists.networksList);
-  const [bobIdInpuText, setBobIdInputText] = useState(filters.bob_id);
+  const bobIdFilters = useAppSelector((state) => state.filters.bobIds);
+  const { data: bobIdsResponse } = useGetBobIdsQuery(bobIdFilters);
+  const [bobIdInpuText, setBobIdInputText] = useState(bobIdFilters.bob_id);
 
   const debouncedBobId = useDebounce(bobIdInpuText, 1000);
 
   useEffect(() => {
-    dispatch(setBobIdFilters({ ...filters, bob_id: debouncedBobId }));
+    dispatch(setBobIdFilters({ ...bobIdFilters, bob_id: debouncedBobId }));
   }, [dispatch, debouncedBobId]);
 
   return (
@@ -30,16 +31,16 @@ const BobIdFilters: FC<{ [key: string]: any }> = (props) => {
       <Grid>
         <SelectInput
           handleClear={() =>
-            dispatch(setBobIdFilters({ ...filters, network_id: '' }))
+            dispatch(setBobIdFilters({ ...bobIdFilters, network_id: '' }))
           }
           label="Сеть"
-          options={networkList}
-          value={filters.network_id}
+          options={bobIdsResponse?.networkList ?? []}
+          value={bobIdFilters.network_id}
           sx={{ minWidth: 200 }}
           onChange={(e) => {
             dispatch(
               setBobIdFilters({
-                ...filters,
+                ...bobIdFilters,
                 network_id: Number(e.target.value),
               })
             );
@@ -59,11 +60,14 @@ const BobIdFilters: FC<{ [key: string]: any }> = (props) => {
       <Grid justifyItems={'flex-end'} alignItems={'end'}>
         <CheckboxInput
           label="Удалённые"
-          checked={filters.show_deleted}
+          checked={bobIdFilters.show_deleted}
           onChange={(e) => {
             console.log(e.target.checked);
             dispatch(
-              setBobIdFilters({ ...filters, show_deleted: e.target.checked })
+              setBobIdFilters({
+                ...bobIdFilters,
+                show_deleted: e.target.checked,
+              })
             );
           }}
         />

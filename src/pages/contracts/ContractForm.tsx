@@ -2,14 +2,17 @@ import { FC } from 'react';
 import { ContractInForm } from '../../types/contracts';
 import { Button } from '@mui/material';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { useAppDispatch } from '../../hooks/redux';
 import FormText from '../../components/ui/Forms/FormText';
-import VerticalForm from '../../components/ui/Forms/VerticalForm';
+import VerticalForm from '../../components/styled/VerticalForm';
 import FormSelect from '../../components/ui/Forms/FormSelect';
-import ContractService from '../../services/ContractService';
-import { AxiosError } from 'axios';
 import { openNotification } from '../../store/notificationSlice';
-import { addContract, updateContract } from '../../store/contractsSlice';
+import {
+  useAddContractMutation,
+  useUpdateContractMutation,
+} from '../../api/contractsApiSlice';
+import { AxiosError } from 'axios';
+import { useGetNetworkListQuery } from '../../api/selectListsApiSlice';
 
 type Props = {
   contract: ContractInForm;
@@ -20,9 +23,9 @@ const ContractForm: FC<Props> = ({ afterSuccesfulSubmit, contract }) => {
   const { control, handleSubmit, setValue, watch } = useForm<ContractInForm>({
     defaultValues: contract,
   });
-  const networksList = useAppSelector(
-    (state) => state.selectLists.networksList
-  );
+  const { data: networksList } = useGetNetworkListQuery();
+  const [addContract] = useAddContractMutation();
+  const [updateContract] = useUpdateContractMutation();
 
   const dispatch = useAppDispatch();
   const watchAll = watch();
@@ -30,25 +33,26 @@ const ContractForm: FC<Props> = ({ afterSuccesfulSubmit, contract }) => {
   const onSubmit: SubmitHandler<ContractInForm> = async (data) => {
     try {
       if (data.id) {
-        const response = await ContractService.updateContract(data);
-        dispatch(updateContract(response.data));
+        updateContract(data);
       } else {
-        const response = await ContractService.createContract(data);
-        dispatch(addContract(response.data));
+        addContract(data);
       }
 
       dispatch(
-        openNotification({ type: 'success', text: 'Контракт сохранился' })
+        openNotification({
+          type: 'success',
+          text: 'Контракт сохранился',
+        })
       );
       afterSuccesfulSubmit();
     } catch (e) {
       dispatch(
-        openNotification({
-          error: e as AxiosError,
-          type: 'error',
-          text: 'Ошибка при сохранении контракта',
-        })
-      );
+          openNotification({
+            error: e as AxiosError,
+            type: 'error',
+            text: 'Сохранение контракта зафейлилось',
+          })
+        );
     }
   };
 
@@ -73,7 +77,7 @@ const ContractForm: FC<Props> = ({ afterSuccesfulSubmit, contract }) => {
         handleClear={() => setValue('network_id', null)}
         label="Сеть"
         name="network_id"
-        options={networksList}
+        options={networksList ?? []}
         value={watchAll.network_id}
       />
       <Button variant="contained" type="submit">

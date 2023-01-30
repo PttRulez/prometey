@@ -3,7 +3,7 @@ import AuthService from '../services/AuthService';
 import { AuthState, Credentials } from '../types/auth';
 import { openNotification } from './notificationSlice';
 import { AxiosError } from 'axios';
-import { authInitialState, emptyAuthState } from './initialState';
+import { authInitialState, authLogoutState } from './initialState';
 
 export const login = createAsyncThunk(
   'auth/login',
@@ -56,7 +56,7 @@ const authSlice = createSlice({
       return { ...action.payload, loading: false };
     },
     logout: (state, action) => {
-      return emptyAuthState;
+      return authLogoutState;
     },
   },
   extraReducers(builder) {

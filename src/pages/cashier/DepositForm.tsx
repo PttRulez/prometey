@@ -9,10 +9,10 @@ import {
 import { useAppDispatch } from '../../hooks/redux';
 import { openNotification } from '../../store/notificationSlice';
 import { AxiosError } from 'axios';
-import VerticalForm from './Forms/VerticalForm';
+import VerticalForm from '../../components/styled/VerticalForm';
 import { Button, Typography } from '@mui/material';
-import FormText from './Forms/FormText';
-import FormDatePicker from './Forms/FormDatePicker';
+import FormText from '../../components/ui/Forms/FormText';
+import FormDatePicker from '../../components/ui/Forms/FormDatePicker';
 import { pick } from 'lodash';
 
 interface Props {
