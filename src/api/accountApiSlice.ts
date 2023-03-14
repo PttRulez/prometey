@@ -41,7 +41,6 @@ export const accountApiSlice = apiSlice.injectEndpoints({
       query: (id) => `/accounts/prepare-form-data/${id}`,
       transformResponse: (res: any) => {
         res.profileList = res.profileList.map((item: ProfileFromServer) => {
-          console.log('item', item);
           return {
             ...item,
             label: `${item.contract.network.name} ${item.name} ${

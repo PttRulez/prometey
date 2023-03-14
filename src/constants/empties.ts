@@ -4,7 +4,7 @@ import { BobId, BobIdFilters } from '../types/bobIds';
 import { Account, AccountsFilters, TimetableFilters } from '../types/accounts';
 import { CashierFilters, Cashout, Deposit } from '../types/cashier';
 import { cashoutStatuses } from './common';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { ReportFilters } from '../types/report';
 
 export const emptyAccountsFilters: AccountsFilters = {
@@ -79,8 +79,8 @@ export const emptyDeposit: Deposit = {
 
 export const emptyReportFilters: ReportFilters = {
   nickname: '',
-  year: String(moment().year()),
-  month: String(moment().month() + 1),
+  year: String(dayjs().year()),
+  month: String(dayjs().month() + 1),
   network_id: '',
   brain_id: '',
 };

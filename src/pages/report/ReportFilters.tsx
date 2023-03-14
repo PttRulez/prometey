@@ -5,7 +5,7 @@ import SelectInput from '../../components/ui/NonFormInputs/SelectInput';
 import { ReportFilters as ReportFiltersType } from '../../types/report';
 import { setReportFilters } from '../../store/filtersSlice';
 import TextInput from '../../components/ui/NonFormInputs/TextInput';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { SelectList } from '../../types/common';
 import { useGetReportQuery } from '../../api/reportApiSlice';
 import { useGetBrainListQuery } from '../../api/selectListsApiSlice';
@@ -20,7 +20,7 @@ const ReportFilters: FC = () => {
   const { data: reportData } = useGetReportQuery(reportFilters);
 
   const yearList = useMemo(() => {
-    const todayYear = moment().year();
+    const todayYear = dayjs().year();
     const years: SelectList = {};
     for (let year = 2016; year <= todayYear; year++) {
       years[year] = String(year);

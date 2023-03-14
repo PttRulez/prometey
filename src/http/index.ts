@@ -1,15 +1,11 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import AuthService from '../services/AuthService';
-
-interface MyAxiosRequestConfig extends Omit<AxiosRequestConfig, 'headers'> {
-  headers?: any;
-}
 
 let $api: AxiosInstance = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
 });
 
-$api.interceptors.request.use(function (config: MyAxiosRequestConfig) {
+$api.interceptors.request.use(function (config: InternalAxiosRequestConfig) {
   config.headers['Authorization'] = `Bearer ${localStorage.getItem(
     'bearerToken'
   )}`;

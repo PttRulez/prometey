@@ -224,7 +224,6 @@ const AccountForm: FC<AccountFormProps> = ({
                   console.log('newValue', newValue);
                   setValue('creation_date', newValue);
                 }}
-                inputFormat="DD-MM-YYYY"
               />
 
               <FormGroup sx={{ marginTop: '0px' }}>

@@ -7,12 +7,12 @@ import AdvancedTable, {
 import Grid from '@mui/material/Unstable_Grid2';
 import { cashoutStatuses } from '../../constants/common';
 import { CashoutFromServer, DepositFromServer } from '../../types/cashier';
-import moment from 'moment';
 import CashierFilter from './CashierFilter';
 import { Dialog, IconButton } from '@mui/material';
 import CashoutForm from './CashoutForm';
 import DepositForm from './DepositForm';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import dayjs from 'dayjs';
 
 const Cashier: FC = () => {
   const filters = useAppSelector((state) => state.filters.cashier);
@@ -52,14 +52,14 @@ const Cashier: FC = () => {
         name: 'ordered_date',
         label: 'Заказали',
         format: (value, _) => {
-          return value ? moment(value).format('DD.MM.YYYY') : '';
+          return value ? dayjs(value).format('DD.MM.YYYY') : '';
         },
       },
       {
         name: 'left_balance_date',
         label: 'Ушло',
         format: (value, _) => {
-          return value ? moment(value).format('DD.MM.YYYY') : '';
+          return value ? dayjs(value).format('DD.MM.YYYY') : '';
         },
       },
       {
@@ -102,14 +102,14 @@ const Cashier: FC = () => {
         name: 'ordered_date',
         label: 'Заказали',
         format: (value, _) => {
-          return value ? moment(value).format('DD.MM.YYYY') : '';
+          return value ? dayjs(value).format('DD.MM.YYYY') : '';
         },
       },
       {
         name: 'reached_balance_date',
         label: 'Пришло',
         format: (value, _) => {
-          return value ? moment(value).format('DD.MM.YYYY') : '';
+          return value ? dayjs(value).format('DD.MM.YYYY') : '';
         },
       },
       {

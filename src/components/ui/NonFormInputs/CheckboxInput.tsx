@@ -17,7 +17,7 @@ const CheckboxInput: FC<CheckboxInputProps> = ({
   onChange,
   sx,
   ...otherProps
-}) => {
+}) =>  {
   return (
     <FormControlLabel
       control={
