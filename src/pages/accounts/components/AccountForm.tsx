@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { Account } from '../../types/accounts';
+import { Account } from '../../../types/accounts';
 import {
   Box,
   Button,
@@ -11,46 +11,45 @@ import {
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import Grid from '@mui/material/Unstable_Grid2';
-import FormText from '../../components/ui/Forms/FormText';
-import FormSelect from '../../components/ui/Forms/FormSelect';
+import FormText from '../../../components/ui/Forms/FormText';
+import FormSelect from '../../../components/ui/Forms/FormSelect';
 import {
   useCreateAccountMutation,
   usePrepareFormDataQuery,
   useUpdateAccountMutation,
-} from '../../api/accountApiSlice';
-import { Room } from '../../types/rooms';
-import { SelectOption } from '../../types/common';
+} from '../../../api/accountApiSlice';
+import { Room } from '../../../types/rooms';
+import { SelectOption } from '../../../types/common';
 import {
   existingDisciplines,
   existinglimits,
   shifts,
   statuses,
-} from '../../constants/common';
-import FormDatePicker from '../../components/ui/Forms/FormDatePicker';
-import { useLazyGetProxiesListQuery } from '../../api/selectListsApiSlice';
-import { Discipline, Limit } from '../../types/other';
-import CheckboxInput from '../../components/ui/NonFormInputs/CheckboxInput';
-import { ProfileFromServer } from '../../types/profiles';
-import { useAppDispatch } from '../../hooks/redux';
-import { openNotification } from '../../store/notificationSlice';
+} from '../../../constants/common';
+import FormDatePicker from '../../../components/ui/Forms/FormDatePicker';
+import { useLazyGetProxiesListQuery } from '../../../api/selectListsApiSlice';
+import { Discipline, Limit } from '../../../types/other';
+import CheckboxInput from '../../../components/ui/NonFormInputs/CheckboxInput';
+import { ProfileFromServer } from '../../../types/profiles';
+import { useAppDispatch } from '../../../hooks/redux';
+import { openNotification } from '../../../store/notificationSlice';
 import { AxiosError } from 'axios';
 import AddIcon from '@mui/icons-material/Add';
-import ProfileForm from '../profiles/ProfileForm';
-import { emptyProfile } from '../../constants/empties';
+import ProfileForm from '../../profiles/ProfileForm';
+import { emptyProfile } from '../../../constants/empties';
+import { omit } from 'lodash';
 
 interface AccountFormProps {
   account: Account;
   afterSuccesfulSubmit: () => void;
-  hueta: any;
 }
 
 const AccountForm: FC<AccountFormProps> = ({
   account,
   afterSuccesfulSubmit,
-  hueta,
 }) => {
   const { control, handleSubmit, setValue, watch } = useForm<Account>({
-    defaultValues: account,
+    defaultValues: omit(account, ['activity', 'created_by', 'currency', 'proxy', 'room']),
   });
   const watchAll = watch();
 
@@ -120,7 +119,7 @@ const AccountForm: FC<AccountFormProps> = ({
         })
       );
     }
-  }, [watchAll.room_id, preparedFormData]);
+  }, [fetchProxies, watchAll.room_id, watchAll.id, preparedFormData]);
 
   useEffect(() => {
     if (isSuccess && watchAll.profile_id) {
@@ -130,7 +129,7 @@ const AccountForm: FC<AccountFormProps> = ({
       setLimitsToChooseFrom(profile?.limits || []);
       setDisciplinesToChooseFrom(profile?.disciplines || []);
     }
-  }, [isSuccess]);
+  }, [isSuccess, preparedFormData?.profileList, watchAll.profile_id]);
 
   const handleChangeProfile = (e: SelectChangeEvent) => {
     const chosenId = Number(e.target.value);
@@ -156,6 +155,8 @@ const AccountForm: FC<AccountFormProps> = ({
     setValue('limits', []);
     setValue('limits_group', []);
   };
+
+
 
   return preparedFormData ? (
     createProfile ? (
@@ -221,7 +222,6 @@ const AccountForm: FC<AccountFormProps> = ({
                 label="Дата создания акка"
                 value={watchAll.creation_date}
                 onChange={(newValue) => {
-                  console.log('newValue', newValue);
                   setValue('creation_date', newValue);
                 }}
               />
@@ -310,10 +310,10 @@ const AccountForm: FC<AccountFormProps> = ({
               <FormText
                 //@ts-ignore
                 control={control}
-                handleClear={() => setValue('bob_id', '')}
+                handleClear={() => setValue('bob_id_name', '')}
                 label="Боб Айди"
-                name="bob_id"
-                value={watchAll.bob_id}
+                name="bob_id_name"
+                value={watchAll.bob_id_name}
               />
               <FormSelect
                 // @ts-ignore
@@ -465,7 +465,6 @@ const AccountForm: FC<AccountFormProps> = ({
                 name="password"
                 value={watchAll.password}
               />
-
               <FormSelect
                 // @ts-ignore
                 control={control}
@@ -476,6 +475,15 @@ const AccountForm: FC<AccountFormProps> = ({
                 name="proxy_id"
                 options={proxiesFromServer.data ?? []}
                 value={watchAll.proxy_id}
+              />
+              <FormText
+                //@ts-ignore
+                control={control}
+                handleClear={() => setValue('info', '')}
+                label="Другая информация"
+                name="info"
+                value={watchAll.info}
+                multiline
               />
               <FormSelect
                 // @ts-ignore
@@ -492,7 +500,7 @@ const AccountForm: FC<AccountFormProps> = ({
                 //@ts-ignore
                 control={control}
                 handleClear={() => setValue('comment', '')}
-                label="Комментарий"
+                label="Комментарий по статусу"
                 name="comment"
                 value={watchAll.comment}
                 multiline

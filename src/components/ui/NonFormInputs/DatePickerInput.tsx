@@ -28,7 +28,10 @@ const DatePickerInput: FC<DatePickerProps> = ({
       <DesktopDatePicker
         label={label}
         onChange={(v) => {
-          onChange(v.set('hours', 12));
+          if (v) {
+            onChange(v.set('hours', 11));
+          }
+          onChange(v);
         }}
         value={value}
         InputProps={{

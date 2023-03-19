@@ -9,27 +9,32 @@ export interface ReportFilters {
   brain_id: number | '';
 }
 
-export interface ReportFromServer {
-    account: AccountFromServer;
+export const reportFormProps = ['id', 'account_id', 'bankroll_finish', 'bankroll_start', 'currency_id', 'month', 'total', 'win', 'year'];
+
+export interface Report {
+    id: number;
     account_id: number;
     bankroll_finish: number;
     bankroll_start: number;
+    currency_id: number;
+    month: number;
+    total: number;
+    win: number;
+    year: number;
+}
+
+export interface ReportFromServer extends Report {
+    account: AccountFromServer;
     bobId: number;
     brain: any;
     cashoutSum: number;
     created_at: string;
-    currency_id: number;
     deposits: Deposit[];
     depositsSum: number;
     hands_played: number;
-    id: number;
-    month: number;
     monthName: string;
     network_id: number;
     ngpSum: number;
     nickname: string;
-    total: number;
     updated_at: string;
-    win: number;
-    year: number;
 }

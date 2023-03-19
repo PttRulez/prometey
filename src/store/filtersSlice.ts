@@ -4,6 +4,7 @@ import { filtersInitialState } from './initialState';
 import { ReportFilters } from '../types/report';
 import { AccountsFilters, TimetableFilters } from '../types/accounts';
 import { BobIdFilters } from '../types/bobIds';
+import { ProxyFilters } from '../types/proxies';
 
 const filtersSlice = createSlice({
   name: 'filters',
@@ -17,6 +18,9 @@ const filtersSlice = createSlice({
     },
     setCashierFilters: (state, action: PayloadAction<CashierFilters>) => {
       state.cashier = action.payload;
+    },
+    setProxiesFilters: (state, action: PayloadAction<ProxyFilters>) => {
+      state.proxies = action.payload;
     },
     setReportFilters: (state, action: PayloadAction<ReportFilters>) => {
       state.report = action.payload;

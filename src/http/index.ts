@@ -18,6 +18,7 @@ $api.interceptors.response.use(
   (config) => config,
   async (error) => {
     const originalRequest = error.config;
+    console.log('interceptor 2')
     if (
       error.response.status === 401 &&
       error.config &&
@@ -33,6 +34,7 @@ $api.interceptors.response.use(
         window.location.href = '/login';
       }
     }
+    console.log('interceptor 1')
     throw error;
   }
 );

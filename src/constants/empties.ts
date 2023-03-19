@@ -6,6 +6,31 @@ import { CashierFilters, Cashout, Deposit } from '../types/cashier';
 import { cashoutStatuses } from './common';
 import dayjs from 'dayjs';
 import { ReportFilters } from '../types/report';
+import { Proxy } from '../types/proxies';
+
+export const emptyAccount: Account = {
+  affiliate_id: '',
+  bob_id_name: '',
+  bob_id_id: '',
+  brain_id: '',
+  comment: '',
+  creation_date: '',
+  currency_id: '',
+  disciplines: [],
+  id: 0,
+  info: '',
+  limits: [],
+  limits_group: [],
+  login: '',
+  nickname: '',
+  password: '',
+  person_id: '',
+  profile_id: '',
+  proxy_id: '',
+  room_id: '',
+  shift_id: '',
+  status_id: '',
+};
 
 export const emptyAccountsFilters: AccountsFilters = {
   affiliate_id: '',
@@ -19,15 +44,6 @@ export const emptyContract: ContractInForm = {
   id: null,
   name: '',
   network_id: null,
-};
-
-export const emptyProfile: ProfileInForm = {
-  id: 0,
-  contract_id: '',
-  name: '',
-  limits: [],
-  shift_id: '',
-  disciplines: [],
 };
 
 export const emptyBobIdFilters: BobIdFilters = {
@@ -63,11 +79,6 @@ export const emptyCashierFilters: CashierFilters = {
   year: '',
 };
 
-export const emptyTimetableFilters: TimetableFilters = {
-  network_id: '',
-  affiliate_id: '',
-};
-
 export const emptyDeposit: Deposit = {
   id: 0,
   account_id: 0,
@@ -77,6 +88,29 @@ export const emptyDeposit: Deposit = {
   comment: '',
 };
 
+export const emptyProfile: ProfileInForm = {
+  id: 0,
+  contract_id: '',
+  name: '',
+  limits: [],
+  shift_id: '',
+  disciplines: [],
+};
+
+export const emptyProxiesFilters = {
+  name: '',
+  show_deleted: false,
+}
+
+export const emptyProxy: Proxy = {
+  id: 0,
+  name: '',
+  ip_port: '',
+  authentication: '',
+  proxy_provider_id: 1,
+  active: true,
+}
+
 export const emptyReportFilters: ReportFilters = {
   nickname: '',
   year: String(dayjs().year()),
@@ -85,26 +119,9 @@ export const emptyReportFilters: ReportFilters = {
   brain_id: '',
 };
 
-export const emptyAccount: Account = {
+export const emptyTimetableFilters: TimetableFilters = {
+  network_id: '',
   affiliate_id: '',
-  bob_id: '',
-  bob_id_id: '',
-  brain_id: '',
-  comment: '',
-  creation_date: '',
-  currency_id: '',
-  disciplines: [],
-  id: 0,
-  info: '',
-  limits: [],
-  limits_group: [],
-  login: '',
-  nickname: '',
-  password: '',
-  person_id: '',
-  profile_id: '',
-  proxy_id: '',
-  room_id: '',
-  shift_id: '',
-  status_id: '',
 };
+
+

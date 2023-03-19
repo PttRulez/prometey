@@ -1,15 +1,16 @@
 import { FC, ReactNode } from 'react';
-import { Paper, Table, TableContainer } from '@mui/material';
+import { Paper, SxProps, Table, TableContainer } from '@mui/material';
 
-type Props = {
+interface Props {
   children?: ReactNode;
+  sx?: SxProps;
 };
 
-const BasicTable: FC<Props> = ({ children }) => {
+const BasicTable: FC<Props> = ({ children, sx }) => {
   return (
     <TableContainer
       component={Paper}
-      sx={{ padding: '30px', overflowX: 'initial' }}
+      sx={{ padding: '30px', overflowX: 'initial', ...sx }}
     >
       <Table aria-label="simple table" stickyHeader>
         {children}

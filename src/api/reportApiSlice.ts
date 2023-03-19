@@ -1,5 +1,5 @@
 import apiSlice from './apiSlice';
-import { ReportFilters, ReportFromServer } from '../types/report';
+import { Report, ReportFilters, ReportFromServer } from '../types/report';
 import { SelectList } from '../types/common';
 
 export const reportApiSlice = apiSlice.injectEndpoints({
@@ -20,7 +20,15 @@ export const reportApiSlice = apiSlice.injectEndpoints({
       },
       providesTags: ['Report'],
     }),
+    updateReport: build.mutation<any, any>({
+      query: (body: Report) => ({
+        url: `/bob-reports/${body.id}`,
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: ['Report'],
+    }),
   }),
 });
 
-export const { useGetReportQuery } =  reportApiSlice;
+export const { useGetReportQuery, useUpdateReportMutation } =  reportApiSlice;

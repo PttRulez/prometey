@@ -50,9 +50,9 @@ const CashoutForm: FC<Props> = ({
 
     try {
       if (dataToSend.id) {
-        await updateCashout(dataToSend);
+        await updateCashout(dataToSend).unwrap();
       } else {
-        await createCashout(dataToSend);
+        await createCashout(dataToSend).unwrap();
       }
 
       afterSuccesfulSubmit();

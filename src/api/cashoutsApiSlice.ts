@@ -9,7 +9,7 @@ export const cashoutsApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body,
       }),
-      invalidatesTags: ['Cashouts', 'Cashier'],
+      invalidatesTags: ['Cashouts', 'Cashier', 'Report'],
     }),
     updateCashout: build.mutation<any, Cashout>({
       query: (body: Cashout) => ({
@@ -17,7 +17,7 @@ export const cashoutsApiSlice = apiSlice.injectEndpoints({
         method: 'PUT',
         body,
       }),
-      invalidatesTags: ['Cashouts', 'Cashier'],
+      invalidatesTags: ['Cashouts', 'Cashier', 'Report'],
     }),
   }),
 });

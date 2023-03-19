@@ -1,7 +1,7 @@
 import { Fab, styled } from '@mui/material';
 
 export const RightBottomFab = styled(Fab)(({ theme }) => ({
-  position: 'absolute',
+  position: 'fixed',
   bottom: 50,
   right: 50,
   backgroundColor: theme.palette.primary.main,

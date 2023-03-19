@@ -7,9 +7,17 @@ export const networksApiSlice = apiSlice.injectEndpoints({
       query: () => '/networks',
       providesTags: ['Networks'],
     }),
+    toggleTimetable: build.mutation<any, number>({
+      query: (id) => ({
+        url: `/networks/toggle-timetable/${id}`,
+        method: 'PUT',
+      }),
+      invalidatesTags: ['Networks', 'Timetable'],
+    }),
   }),
 });
 
 export const {
   useGetNetworksQuery,
+  useToggleTimetableMutation
 } = networksApiSlice;

@@ -4,6 +4,7 @@ import {
   emptyAccountsFilters,
   emptyBobIdFilters,
   emptyCashierFilters,
+  emptyProxiesFilters,
   emptyReportFilters,
   emptyTimetableFilters,
 } from '../constants/empties';
@@ -28,6 +29,7 @@ export const filtersInitialState: FiltersState = {
   accounts: emptyAccountsFilters,
   bobIds: emptyBobIdFilters,
   cashier: emptyCashierFilters,
+  proxies: emptyProxiesFilters,
   report: emptyReportFilters,
   timetable: emptyTimetableFilters,
 }

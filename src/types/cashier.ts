@@ -1,4 +1,4 @@
-import { Account, AccountFromServer } from './accounts';
+import { AccountFromServer } from './accounts';
 
 export interface Cashout {
   account_id: number;
@@ -33,7 +33,7 @@ export interface Deposit {
 }
 
 export interface DepositFromServer extends Deposit {
-  account: Account;
+  account: AccountFromServer;
   orderFromAff: boolean;
 }
 

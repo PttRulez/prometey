@@ -37,7 +37,6 @@ const DepositForm: FC<Props> = ({
   const [updateDeposit] = useUpdateDepositMutation();
 
   const onSubmit = async (formData: Deposit) => {
-    console.log('submitted Deposit', formData);
     const dataToSend = pick(formData, ['id', 'account_id', 'amount', 'comment', 'ordered_date', 'reached_balance_date' ]) as Deposit;
 
     try {
@@ -56,6 +55,7 @@ const DepositForm: FC<Props> = ({
         })
       );
     } catch (e) {
+      console.log('Dep e', e);
       dispatch(
         openNotification({
           error: e as AxiosError,
@@ -80,9 +80,18 @@ const DepositForm: FC<Props> = ({
       <FormDatePicker
         //@ts-ignore
         control={control}
+        name="ordered_date"
+        handleClear={() => setValue('ordered_date', '')}
+        label="Когда заказали"
+        value={watchAll.ordered_date}
+        inputFormat="DD-MM-YYYY"
+      />
+      <FormDatePicker
+        //@ts-ignore
+        control={control}
         name="reached_balance_date"
         handleClear={() => setValue('reached_balance_date', '')}
-        label="Дата"
+        label="Когда пришло"
         value={watchAll.reached_balance_date}
         inputFormat="DD-MM-YYYY"
       />

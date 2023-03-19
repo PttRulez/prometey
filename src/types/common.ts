@@ -2,11 +2,13 @@ import { CashierFilters } from './cashier';
 import { ReportFilters } from './report';
 import { AccountsFilters, TimetableFilters } from './accounts';
 import { BobIdFilters } from './bobIds';
+import { ProxyFilters } from './proxies';
 
 export interface FiltersState {
   accounts: AccountsFilters;
   bobIds: BobIdFilters;
   cashier: CashierFilters;
+  proxies: ProxyFilters;
   report: ReportFilters;
   timetable: TimetableFilters;
 }

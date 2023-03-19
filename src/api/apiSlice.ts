@@ -26,6 +26,7 @@ const apiSlice = createApi({
     'NetworkList',
     'Profiles',
     'ProfilesSelectList',
+    'Proxies',
     'ProxiesList',
     'preparedAccountFormData',
     'Report',

@@ -59,7 +59,7 @@ export const accountApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body,
       }),
-      invalidatesTags: ['Accounts', 'preparedAccountFormData'],
+      invalidatesTags: ['Accounts', 'preparedAccountFormData', 'Timetable'],
     }),
     updateAccount: build.mutation<AccountFromServer, Account>({
       query: (body: Account) => ({
@@ -67,13 +67,17 @@ export const accountApiSlice = apiSlice.injectEndpoints({
         method: 'PUT',
         body,
       }),
-      invalidatesTags: ['Accounts', 'preparedAccountFormData'],
+      invalidatesTags: ['Accounts', 'preparedAccountFormData', 'Timetable'],
+    }),
+    getAccount: build.query<any, number>({
+      query: (id) => `/accounts/${id}`,
     }),
   }),
 });
 
 export const {
   useGetAccountsQuery,
+  useGetAccountQuery,
   useGetTimetableQuery,
   usePrepareFormDataQuery,
   useCreateAccountMutation,

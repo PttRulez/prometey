@@ -3,10 +3,14 @@ import { FC } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import BasicTable from '../../components/ui/BasicTable/BasicTable';
 import BasicTableHeader from '../../components/ui/BasicTable/BasicTableHeader';
-import { useGetNetworksQuery } from '../../api/networksApiSlice';
+import {
+  useGetNetworksQuery,
+  useToggleTimetableMutation,
+} from '../../api/networksApiSlice';
 
 const Networks: FC = () => {
   const { data: networks } = useGetNetworksQuery();
+  const [toggleTimetable] = useToggleTimetableMutation();
 
   return (
     <BasicTable>
@@ -30,7 +34,6 @@ const Networks: FC = () => {
                   {network.name}
                 </Link>
               </TableCell>
-
               <TableCell>{network.info}</TableCell>
             </TableRow>
           ))}

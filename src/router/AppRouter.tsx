@@ -13,6 +13,8 @@ import routes from './routes';
 import SingleNetwork from '../pages/networks/SingleNetwork';
 import Contracts from '../pages/contracts/Contracts';
 import Profiles from '../pages/profiles/Profiles';
+import SingleAccount from '../pages/accounts/SingleAccount';
+import ProxiesIndex from '../pages/proxies/ProxiesIndex';
 
 const AppRouter = () => {
   return (
@@ -22,13 +24,14 @@ const AppRouter = () => {
           <Route element={<Auth />}>
             <Route path={routes.login} element={<Login />} />
             <Route path={routes.accounts.index} element={<Accounts />} />
-
+            <Route path={routes.accounts.show} element={<SingleAccount />} />
             <Route index element={<TimeTable />} />
             <Route path={routes.bobIds.index} element={<BobIds />} />
             <Route path={routes.cashier.index} element={<Cashier />} />
             <Route path={routes.contracts.index} element={<Contracts />} />
             <Route path={routes.networks.index} element={<Networks />} />
             <Route path={routes.profiles.index} element={<Profiles />} />
+            <Route path={routes.proxies.index} element={<ProxiesIndex />} />
             <Route path={routes.report.index} element={<Report />} />
             <Route path={routes.networks.show} element={<SingleNetwork />} />
 

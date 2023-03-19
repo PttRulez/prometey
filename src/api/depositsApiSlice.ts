@@ -9,7 +9,7 @@ export const depositsApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body,
       }),
-      invalidatesTags: ['Deposits', 'Cashier'],
+      invalidatesTags: ['Deposits', 'Cashier', 'Report'],
     }),
     updateDeposit: build.mutation<any, Deposit>({
       query: (body: Deposit) => ({
@@ -17,7 +17,7 @@ export const depositsApiSlice = apiSlice.injectEndpoints({
         method: 'PUT',
         body,
       }),
-      invalidatesTags: ['Deposits', 'Cashier'],
+      invalidatesTags: ['Deposits', 'Cashier', 'Report'],
     }),
   }),
 });

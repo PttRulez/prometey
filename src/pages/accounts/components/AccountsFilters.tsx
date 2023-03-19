@@ -1,15 +1,15 @@
 import { FC, useEffect, useState } from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
-import TextInput from '../../components/ui/NonFormInputs/TextInput';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import useDebounce from '../../hooks/useDebounce';
+import TextInput from '../../../components/ui/NonFormInputs/TextInput';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import useDebounce from '../../../hooks/useDebounce';
 import {
   useGetAffiliatesListQuery,
   useGetNetworkListQuery,
-} from '../../api/selectListsApiSlice';
-import SelectInput from '../../components/ui/NonFormInputs/SelectInput';
+} from '../../../api/selectListsApiSlice';
+import SelectInput from '../../../components/ui/NonFormInputs/SelectInput';
 import { SelectChangeEvent } from '@mui/material';
-import { setAccountsFilters } from '../../store/filtersSlice';
+import { setAccountsFilters } from '../../../store/filtersSlice';
 
 const AccountsFilters: FC = () => {
   const dispatch = useAppDispatch();

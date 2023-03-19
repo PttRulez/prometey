@@ -39,7 +39,6 @@ const Login: FC = () => {
       <Box
         component="form"
         onSubmit={handleSubmit(onSubmit)}
-        autoComplete="off"
         sx={{
           display: 'flex',
           flexDirection: 'column',

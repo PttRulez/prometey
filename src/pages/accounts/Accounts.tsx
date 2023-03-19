@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { useAppSelector } from '../../hooks/redux';
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { statuses } from '../../constants/common';
-import AccountActions from './AccountActions';
+import AccountActions from './components/AccountActions';
 import {
   DarkModeTwoTone,
   WbSunnyTwoTone,
@@ -18,14 +18,15 @@ import {
   emptyCashout,
   emptyDeposit,
 } from '../../constants/empties';
-import AccountForm from './AccountForm';
+import AccountForm from './components/AccountForm';
 import { useGetAccountsQuery } from '../../api/accountApiSlice';
 import { ProfileInForm } from '../../types/profiles';
 import ProfileForm from '../profiles/ProfileForm';
 import CashoutForm from '../cashier/CashoutForm';
 import DepositForm from '../cashier/DepositForm';
-import AccountsFilters from './AccountsFilters';
+import AccountsFilters from './components/AccountsFilters';
 import { useGetNetworkListQuery } from '../../api/selectListsApiSlice';
+import MyLink from '../../components/ui/MyLink';
 
 const Accounts = () => {
   const accountsFilters = useAppSelector((state) => state.filters.accounts);
@@ -51,9 +52,19 @@ const Accounts = () => {
   //@ts-ignore
   const columns: GridColDef[] = useMemo(
     () => [
-      { field: 'nickname', headerName: 'Ник', editable: true, flex: 1 },
       {
-        field: 'bob_id',
+        field: 'nickname',
+        headerName: 'Ник',
+        editable: true,
+        flex: 1,
+        renderCell: ({ row: account }) => {
+          return (
+            <MyLink to={`/accounts/${account.id}`}>{account.nickname}</MyLink>
+          );
+        },
+      },
+      {
+        field: 'bob_id_name',
         headerName: 'Bob ID',
         // valueGetter: (params: GridValueGetterParams) =>
         //   params.row.bob_id?.bob_id?.toLocaleString('en').replaceAll(',', ' '),
@@ -205,7 +216,6 @@ const Accounts = () => {
         <>
           {!!editedAccount && (
             <AccountForm
-              hueta={{ editedProfile, setEditedProfile }}
               account={editedAccount!}
               afterSuccesfulSubmit={() => setEditedAccount(null)}
             />

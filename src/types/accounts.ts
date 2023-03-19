@@ -7,7 +7,7 @@ import { Profile } from './profiles';
 
 export interface Account {
   affiliate_id: SelectedProperty;
-  bob_id: string;
+  bob_id_name: string;
   bob_id_id: SelectedProperty;
   brain_id: SelectedProperty;
   comment: string;
@@ -31,9 +31,11 @@ export interface Account {
 export type AccountFromServer = Account & {
   affiliate?: Affiliate;
   brain: { id: number; name: string };
-  created_by: number;
+  created_by: { [key:string] : string | number };
   profile: Profile;
+  proxy: any;
   room: Room & { network: Network };
+  shift: string;
   status_id: number;
 };
 

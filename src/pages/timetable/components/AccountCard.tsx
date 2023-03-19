@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Card, CardContent, Link } from '@mui/material';
+import { Card, CardContent, Link, Typography } from '@mui/material';
 import { AccountFromServer } from '../../../types/accounts';
 import { Link as RouterLink } from 'react-router-dom';
 
@@ -14,22 +14,24 @@ const shiftColors: { [key: number]: string } = {
 
 const AccountCard: FC<IAccountCardProps> = ({ account }) => {
   return (
-    <Card>
-      <CardContent
-        sx={{
-          textAlign: 'center',
-          backgroundColor: shiftColors[account.status_id],
-        }}
-      >
-        <Link
-          component={RouterLink}
-          to={`/accounts/${account.id}`}
-          sx={{ color: 'common.white', textDecoration: 'none' }}
+    <Link
+      component={RouterLink}
+      to={`/accounts/${account.id}`}
+      sx={{ color: 'common.white', textDecoration: 'none' }}
+    >
+      <Card>
+        <CardContent
+          sx={{
+            textAlign: 'center',
+            backgroundColor: shiftColors[account.status_id],
+            color: 'common.white', textDecoration: 'none'
+          }}
         >
-          {account.nickname}
-        </Link>
-      </CardContent>
-    </Card>
+          <Typography variant='body2' sx={{textAlign: 'left', color: 'grey.800'}}>{account.affiliate?.name}</Typography>
+          <p>{account.nickname} - {account.limits.join(', ')}</p>
+        </CardContent>
+      </Card>
+    </Link>
   );
 };
 

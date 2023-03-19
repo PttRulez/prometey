@@ -12,6 +12,9 @@ const routes = {
     create: '/bob-ids/:id/edit',
   },
   cashier: { index: '/cashier' },
+  contracts: {
+    index: '/contracts',
+  },
   home: '/',
   login: '/login',
   networks: {
@@ -20,11 +23,12 @@ const routes = {
     edit: '/networks/:id/edit',
     create: '/networks/:id/edit',
   },
-  contracts: {
-    index: '/contracts',
-  },
+
   profiles: {
     index: '/profiles',
+  },
+  proxies: {
+    index: '/proxies',
   },
   report: {
     index: '/report',
