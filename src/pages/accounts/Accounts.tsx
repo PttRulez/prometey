@@ -66,12 +66,6 @@ const Accounts = () => {
       {
         field: 'bob_id_name',
         headerName: 'Bob ID',
-        // valueGetter: (params: GridValueGetterParams) =>
-        //   params.row.bob_id?.bob_id?.toLocaleString('en').replaceAll(',', ' '),
-        // valueGetter: (params: GridValueGetterParams) => {
-        //   console.log(params);
-        //   return params.row.bob_id?.bob_id;
-        // },
         valueFormatter: (params) =>
           params.value
             ? Number(params.value)?.toLocaleString('en').replaceAll(',', ' ')
@@ -88,22 +82,9 @@ const Accounts = () => {
         valueGetter: (params: GridValueGetterParams) =>
           params.row.room?.network?.id,
         valueFormatter: ({ value }) => networkList?.[value],
-        // valueFormatter: ({ id: rowId, value, field, api }) => {
-        //   // console.log('networks', networks);
-        //   const colDef = api.getColumn(field);
-        //   if (value.value) {
-        //     value = value.value;
-        //   }
-        //   const option = colDef.valueOptions.find(
-        //     // @ts-ignore
-        //     ({ value: optionValue }) => value === optionValue
-        //   );
-        //   // console.log('option', option);
-        //   return option?.label ?? '';
-        // },
       },
-      { field: 'disciplines', headerName: 'Дисциплины', flex: 1 },
-      { field: 'limits', headerName: 'Лимиты', flex: 1 },
+      { field: 'disciplines', headerName: 'Дисциплины' },
+      { field: 'limits', headerName: 'Лимиты' },
       {
         field: 'status_id',
         headerName: 'Статус',

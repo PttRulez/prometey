@@ -4,6 +4,7 @@ import {
   emptyAccountsFilters,
   emptyBobIdFilters,
   emptyCashierFilters,
+  emptyProfilesFilters,
   emptyProxiesFilters,
   emptyReportFilters,
   emptyTimetableFilters,
@@ -30,6 +31,7 @@ export const filtersInitialState: FiltersState = {
   bobIds: emptyBobIdFilters,
   cashier: emptyCashierFilters,
   proxies: emptyProxiesFilters,
+  profiles: emptyProfilesFilters,
   report: emptyReportFilters,
   timetable: emptyTimetableFilters,
 }

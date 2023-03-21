@@ -1,5 +1,5 @@
 import { ContractInForm } from '../types/contracts';
-import { ProfileInForm } from '../types/profiles';
+import { ProfileInForm, ProfilesFilters } from '../types/profiles';
 import { BobId, BobIdFilters } from '../types/bobIds';
 import { Account, AccountsFilters, TimetableFilters } from '../types/accounts';
 import { CashierFilters, Cashout, Deposit } from '../types/cashier';
@@ -96,6 +96,10 @@ export const emptyProfile: ProfileInForm = {
   shift_id: '',
   disciplines: [],
 };
+
+export const emptyProfilesFilters: ProfilesFilters = {
+  network_id: '',
+}
 
 export const emptyProxiesFilters = {
   name: '',

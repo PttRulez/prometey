@@ -37,3 +37,7 @@ export interface ProfileFromServer extends Profile {
   accounts: Account[];
   contract: Omit<ContractFromServer, 'profile'> & { network: Network };
 }
+
+export interface ProfilesFilters {
+  network_id: number | '';
+}

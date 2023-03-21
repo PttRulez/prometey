@@ -3,12 +3,14 @@ import { ReportFilters } from './report';
 import { AccountsFilters, TimetableFilters } from './accounts';
 import { BobIdFilters } from './bobIds';
 import { ProxyFilters } from './proxies';
+import { ProfilesFilters } from './profiles';
 
 export interface FiltersState {
   accounts: AccountsFilters;
   bobIds: BobIdFilters;
   cashier: CashierFilters;
   proxies: ProxyFilters;
+  profiles: ProfilesFilters;
   report: ReportFilters;
   timetable: TimetableFilters;
 }

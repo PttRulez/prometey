@@ -4,6 +4,7 @@ import {
   Button,
   Dialog,
   IconButton,
+  Tab,
   TableBody,
   TableCell,
   TableRow,
@@ -11,7 +12,6 @@ import {
 import { useParams } from 'react-router-dom';
 import { useGetAccountQuery } from '../../api/accountApiSlice';
 import dayjs from 'dayjs';
-import { AccountFromServer } from '../../types/accounts';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import Grid from '@mui/material/Unstable_Grid2';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
@@ -19,21 +19,25 @@ import DepositForm from '../cashier/DepositForm';
 import { emptyCashout, emptyDeposit } from '../../constants/empties';
 import CashoutForm from '../cashier/CashoutForm';
 import AccountForm from './components/AccountForm';
+import { TabContext, TabList, TabPanel } from '@mui/lab';
+import CashoutsTable from '../cashier/CashoutsTable';
+import DepositTable from '../cashier/DepositTable';
 
 const SingleAccount: FC = () => {
   const [addDeposit, setAddDeposit] = useState(false);
   const [addCashout, setAddCashout] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [tab, setTab] = useState<string>('account');
 
   const { id } = useParams();
   const { data } = useGetAccountQuery(Number(id));
-  let transactions;
-  let account: AccountFromServer | undefined;
+  // let account: AccountFromServer | undefined;
 
-  if (data) {
-    transactions = data.transactions;
-    account = data.account;
-  }
+  const { account, cashouts, deposits } = data ?? {};
+  // if (data) {
+  //   var deposits = data.transactions;
+  //   var account = data.account;
+  // }
 
   const accountToDisplay = useMemo(() => {
     if (!account) return null;
@@ -84,18 +88,43 @@ const SingleAccount: FC = () => {
           </IconButton>
         </Grid>
       </Grid>
-      {accountToDisplay && (
-        <BasicTable sx={{ width: 'max-content' }}>
-          <TableBody>
-            {accountToDisplay.map((prop) => (
-              <TableRow key={prop.name}>
-                <TableCell sx={{ fontWeight: 'bold' }}>{prop.name}</TableCell>
-                <TableCell>{prop.value}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </BasicTable>
-      )}
+
+      <TabContext value={tab}>
+        <TabList onChange={(e, v) => setTab(v)} value="account">
+          <Tab label="Аккаунт" value="account" />
+          <Tab label="Транзакции" value="transactions" />
+        </TabList>
+        <TabPanel value="account">
+          {accountToDisplay && (
+            <BasicTable sx={{ width: 'max-content' }}>
+              <TableBody>
+                {accountToDisplay.map((prop) => (
+                  <TableRow key={prop.name}>
+                    <TableCell sx={{ fontWeight: 'bold' }}>
+                      {prop.name}
+                    </TableCell>
+                    <TableCell sx={{ whiteSpace: 'pre-wrap' }}>
+                      {prop.value}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </BasicTable>
+          )}
+        </TabPanel>
+        <TabPanel value="transactions">
+          <Grid container spacing={2}>
+            <Grid xs={6}>
+              <CashoutsTable cashouts={cashouts ?? []} />
+            </Grid>
+
+            {/*Таблица депозитов*/}
+            <Grid xs={6}>
+              <DepositTable deposits={deposits ?? []} />
+            </Grid>
+          </Grid>
+        </TabPanel>
+      </TabContext>
 
       {account && (
         <Fragment>

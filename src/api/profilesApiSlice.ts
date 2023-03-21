@@ -1,10 +1,17 @@
 import apiSlice from './apiSlice';
-import { ProfileFromServer, ProfileInForm } from '../types/profiles';
+import {
+  ProfileFromServer,
+  ProfileInForm,
+  ProfilesFilters,
+} from '../types/profiles';
 
 export const profilesApiSlice = apiSlice.injectEndpoints({
   endpoints: (build) => ({
-    getProfiles: build.query<ProfileFromServer[], void>({
-      query: () => '/profiles',
+    getProfiles: build.query<ProfileFromServer[], ProfilesFilters>({
+      query: (filters) => ({
+        url: '/profiles',
+        params: { filters: JSON.stringify(filters) },
+      }),
       transformResponse: (res: ProfileFromServer[]) =>
         res.sort((a, b) =>
           a.name.localeCompare(b.name, 'ru', { numeric: true })

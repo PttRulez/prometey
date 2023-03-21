@@ -19,6 +19,7 @@ import {
 import Grid from '@mui/material/Unstable_Grid2';
 import CheckboxInput from '../../components/ui/NonFormInputs/CheckboxInput';
 import { useGetContractsQuery } from '../../api/contractsApiSlice';
+import { AxiosError } from 'axios';
 
 type Props = {
   closeForm: () => void;
@@ -29,7 +30,7 @@ const ProfileForm: FC<Props> = ({ closeForm, profile }) => {
   // В БД оставались null
   if (!profile.disciplines) profile.disciplines = [];
   if (!profile.limits) profile.limits = [];
-console.log('profile', profile)
+
   const { control, handleSubmit, setValue, watch } = useForm<ProfileInForm>({
     defaultValues: profile,
   });
@@ -39,45 +40,30 @@ console.log('profile', profile)
   const [updateProfile] = useUpdateProfileMutation();
   const { data: contracts } = useGetContractsQuery();
 
-  console.log('contracts', contracts)
   const onSubmit: SubmitHandler<ProfileInForm> = async (data) => {
-    console.log('data', data);
-    // return;
-    if (data.id) {
-      const result = await updateProfile(data);
-      console.log('result', result);
-      if ('error' in result) {
-        dispatch(
-          openNotification({
-            type: 'error',
-            text: 'Профиль НЕ смог обновиться',
-          })
-        );
+    try {
+      if(data.id) {
+        await updateProfile(data).unwrap();
       } else {
-        dispatch(
+        await addProfile(data).unwrap();
+      }
+
+      dispatch(
           openNotification({
             type: 'success',
             text: 'Профиль успешно обновился',
           })
         );
         closeForm();
-      }
-    } else {
-      const result = await addProfile(data);
+    } catch (e) {
 
-      if ('error' in result) {
-        dispatch(
+      dispatch(
           openNotification({
+            error: e as AxiosError,
             type: 'error',
-            text: 'Профиль НЕ создался',
+            text: 'Профиль НЕ смог сохраниться',
           })
         );
-      } else {
-        dispatch(
-          openNotification({ type: 'success', text: 'Профиль создался' })
-        );
-        closeForm();
-      }
     }
   };
 

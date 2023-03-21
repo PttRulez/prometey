@@ -78,7 +78,6 @@ const AccountsFilters: FC = () => {
       <Grid>
         <SelectInput
           handleClear={() => {
-            console.log('NETWORK');
             dispatch(
               setAccountsFilters({ ...accountsFilters, network_id: '' })
             );

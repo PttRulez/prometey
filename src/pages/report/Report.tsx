@@ -1,7 +1,10 @@
 import { FC, Fragment, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import {
+  useCreateReportMutation,
+  useDeleteReportMutation,
   useGetReportQuery,
+  useUpdateMonthBankrollsMutation,
   useUpdateReportMutation,
 } from '../../api/reportApiSlice';
 import {
@@ -12,15 +15,31 @@ import {
   GridRowEditStopParams,
 } from '@mui/x-data-grid';
 import ReportFilters from './ReportFilters';
-import { reportFormProps, ReportFromServer } from '../../types/report';
+import {
+  MonthBankrollsUpdate,
+  Report as ReportType,
+  reportFormProps,
+  ReportFromServer,
+} from '../../types/report';
 import { pick } from 'lodash';
 import { openNotification } from '../../store/notificationSlice';
 import { AxiosError } from 'axios';
-import { Box, Dialog } from '@mui/material';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  IconButton,
+} from '@mui/material';
 import DepositForm from '../cashier/DepositForm';
 import { emptyCashout, emptyDeposit } from '../../constants/empties';
 import CashoutForm from '../cashier/CashoutForm';
 import Grid from '@mui/material/Unstable_Grid2';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import CreateNewFolderOutlinedIcon from '@mui/icons-material/CreateNewFolderOutlined';
+import MyLink from '../../components/ui/MyLink';
+import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 
 const Report: FC = () => {
   const dispatch = useAppDispatch();
@@ -28,14 +47,34 @@ const Report: FC = () => {
   const { data: reportData } = useGetReportQuery(reportFilters);
   const [pageSize, setPageSize] = useState(20);
   const [updateReport] = useUpdateReportMutation();
+  const [updateMonthBankrolls] = useUpdateMonthBankrollsMutation();
+  const [createMonth] = useCreateReportMutation();
   const [depositAccount, setDepositAccount] = useState(null);
   const [cashoutAccount, setCashoutAccount] = useState(null);
+  const [reportToDelete, setReportToDelete] = useState<ReportFromServer | null>(
+    null
+  );
+  const [deleteReport] = useDeleteReportMutation();
 
   const columns: GridColDef[] = useMemo(
     () =>
       [
-        { field: 'bobId', headerName: 'Боб Айди', flex: 1 },
-        { field: 'nickname', headerName: 'Ник', flex: 1 },
+        {
+          field: 'bob_id_name',
+          headerName: 'Боб Айди',
+          flex: 1,
+          valueGetter: (params) => params.row.account.bob_id_name,
+        },
+        {
+          field: 'nickname',
+          headerName: 'Ник',
+          flex: 1,
+          renderCell: (params) => (
+            <MyLink to={`/accounts/${params.row.account.id}`}>
+              {params.row.nickname}
+            </MyLink>
+          ),
+        },
         {
           field: 'bankroll_start',
           headerName: 'Банкролл на начало',
@@ -105,6 +144,14 @@ const Report: FC = () => {
           align: 'center',
           headerAlign: 'center',
         },
+        {
+          field: 'actions',
+          renderCell: (params) => (
+            <IconButton onClick={() => setReportToDelete(params.row)}>
+              <DeleteTwoToneIcon />
+            </IconButton>
+          ),
+        },
       ] as GridColDef[],
     []
   );
@@ -119,7 +166,7 @@ const Report: FC = () => {
   }, [reportData]);
 
   const editHandler = async (params: GridRowEditStopParams) => {
-    const body = pick(params.row, reportFormProps);
+    const body = pick(params.row, reportFormProps) as ReportType;
 
     try {
       await updateReport(body).unwrap();
@@ -131,6 +178,7 @@ const Report: FC = () => {
         })
       );
     } catch (e) {
+      console.log('e', e);
       dispatch(
         openNotification({
           error: e as AxiosError,
@@ -144,6 +192,28 @@ const Report: FC = () => {
   const footerConstructor = () => {
     return (
       <GridFooterContainer>
+        <Grid>
+          <IconButton
+            onClick={() =>
+              updateMonthBankrolls(
+                pick(reportFilters, ['year', 'month']) as MonthBankrollsUpdate
+              )
+            }
+          >
+            <CalendarMonthIcon />
+          </IconButton>
+        </Grid>
+        <Grid>
+          <IconButton
+            onClick={() =>
+              createMonth(
+                pick(reportFilters, ['year', 'month']) as MonthBankrollsUpdate
+              )
+            }
+          >
+            <CreateNewFolderOutlinedIcon />
+          </IconButton>
+        </Grid>
         <Grid
           flexGrow={1}
           sx={{
@@ -170,7 +240,23 @@ const Report: FC = () => {
 
   return (
     <Fragment>
-      <ReportFilters />
+      <Grid container>
+        <Grid>
+          <ReportFilters />
+        </Grid>
+        <Grid>
+          <IconButton
+            onClick={() =>
+              updateMonthBankrolls(
+                pick(reportFilters, ['year', 'month']) as MonthBankrollsUpdate
+              )
+            }
+          >
+            <CalendarMonthIcon />
+          </IconButton>
+        </Grid>
+      </Grid>
+
       <DataGrid
         components={{ Footer: footerConstructor }}
         editMode="row"
@@ -207,6 +293,28 @@ const Report: FC = () => {
             closeForm={() => setCashoutAccount(null)}
             afterSuccesfulSubmit={() => setCashoutAccount(null)}
           />
+        )}
+      </Dialog>
+      <Dialog open={!!reportToDelete} sx={{ padding: 0 }}>
+        {reportToDelete && (
+          <>
+            <DialogContent>
+              Удалить {reportToDelete.account.nickname} из отчета?
+            </DialogContent>
+            <DialogActions>
+              <Button autoFocus onClick={() => setReportToDelete(null)}>
+                Cancel
+              </Button>
+              <Button
+                onClick={async () => {
+                  await deleteReport(reportToDelete.id);
+                  setReportToDelete(null);
+                }}
+              >
+                Ok
+              </Button>
+            </DialogActions>
+          </>
         )}
       </Dialog>
     </Fragment>

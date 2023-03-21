@@ -5,6 +5,7 @@ import { ReportFilters } from '../types/report';
 import { AccountsFilters, TimetableFilters } from '../types/accounts';
 import { BobIdFilters } from '../types/bobIds';
 import { ProxyFilters } from '../types/proxies';
+import { ProfilesFilters } from '../types/profiles';
 
 const filtersSlice = createSlice({
   name: 'filters',
@@ -18,6 +19,9 @@ const filtersSlice = createSlice({
     },
     setCashierFilters: (state, action: PayloadAction<CashierFilters>) => {
       state.cashier = action.payload;
+    },
+    setProfilesFilters: (state, action: PayloadAction<ProfilesFilters>) => {
+      state.profiles = action.payload;
     },
     setProxiesFilters: (state, action: PayloadAction<ProxyFilters>) => {
       state.proxies = action.payload;
@@ -35,6 +39,7 @@ export const {
   setAccountsFilters,
   setBobIdFilters,
   setCashierFilters,
+  setProfilesFilters,
   setTimetableFilters,
   setReportFilters,
 } = filtersSlice.actions;

@@ -1,6 +1,11 @@
 import { AccountFromServer } from './accounts';
 import { Deposit } from './cashier';
 
+export interface MonthBankrollsUpdate {
+  year: number;
+  month: number;
+}
+
 export interface ReportFilters {
   nickname: string;
   year: number | string;

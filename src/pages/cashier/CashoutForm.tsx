@@ -48,13 +48,7 @@ const CashoutForm: FC<Props> = ({
       'canceled_date',
     ]) as Cashout;
 
-    try {
-      if (dataToSend.id) {
-        await updateCashout(dataToSend).unwrap();
-      } else {
-        await createCashout(dataToSend).unwrap();
-      }
-
+    const success = () => {
       afterSuccesfulSubmit();
 
       dispatch(
@@ -63,15 +57,29 @@ const CashoutForm: FC<Props> = ({
           text: 'Кэшаут сохранился',
         })
       );
+    }
+
+    try {
+      if (dataToSend.id) {
+        await updateCashout(dataToSend).unwrap();
+      } else {
+        await createCashout(dataToSend).unwrap();
+      }
+
+      success();
     } catch (e) {
         console.log('Error cashout saving e:', e);
-      dispatch(
-        openNotification({
-          error: e as AxiosError,
-          type: 'error',
-          text: 'Траблы с кэшаутом',
-        })
-      );
+        if (e.originalStatus >= 200 && e.originalStatus < 300) {
+          success();
+        } else {
+          dispatch(
+          openNotification({
+            error: e as AxiosError,
+            type: 'error',
+            text: 'Траблы с кэшаутом',
+          })
+        );
+        }
     }
   };
 

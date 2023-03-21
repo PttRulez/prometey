@@ -18,23 +18,23 @@ import AddNewButton from '../../components/ui/AddNewButton';
 import { profileFormProps, ProfileInForm } from '../../types/profiles';
 import { emptyProfile } from '../../constants/empties';
 import { pick } from 'lodash';
-import { useAppDispatch } from '../../hooks/redux';
+import { useAppSelector } from '../../hooks/redux';
 import ProfileForm from './ProfileForm';
 import { useGetProfilesQuery } from '../../api/profilesApiSlice';
+import ProfileFilters from './ProfileFilters';
 
 const Profiles: FC = () => {
-  const { data: profiles = [], isLoading } = useGetProfilesQuery();
+  const profilesFilters = useAppSelector((state) => state.filters.profiles);
+  const { data: profiles = [], isLoading } = useGetProfilesQuery(
+    profilesFilters
+  );
   const [editedProfile, setEditedProfile] = useState<ProfileInForm | null>(
     null
   );
-  const dispatch = useAppDispatch();
-
-  // useEffect(() => {
-  //   dispatch(fetchContracts());
-  // }, [dispatch]);
 
   return (
     <>
+      <ProfileFilters />
       <BasicTable>
         <BasicTableHeader>
           <TableRow>
@@ -44,9 +44,9 @@ const Profiles: FC = () => {
               </Box>
             </TableCell>
             <TableCell>Имя профиля</TableCell>
-            <TableCell>Контракт</TableCell>
             <TableCell>Сеть</TableCell>
-            <TableCell>Bob ID</TableCell>
+            <TableCell>Дисциплины</TableCell>
+            <TableCell>Лимиты</TableCell>
             <TableCell>Аккаунт</TableCell>
             <TableCell />
           </TableRow>
@@ -54,14 +54,14 @@ const Profiles: FC = () => {
 
         <TableBody>
           {profiles.map((profile, index) => (
-            <TableRow key={profile.name}>
+            <TableRow key={profile.id}>
               <TableCell>{index + 1}</TableCell>
               <TableCell>{profile.name}</TableCell>
-              <TableCell>{profile.contract.name}</TableCell>
               <TableCell>{profile.contract.network.name}</TableCell>
-              <TableCell>{profile.bob_id?.bob_id}</TableCell>
+              <TableCell>{profile.disciplines.join(', ')}</TableCell>
+              <TableCell>{profile.limits.join(', ')}</TableCell>
               <TableCell>
-                {profile.bob_id?.active_accounts.map((account) => (
+                {profile.accounts.map((account) => (
                   <Link
                     key={account.nickname}
                     component={BrowserLink}
