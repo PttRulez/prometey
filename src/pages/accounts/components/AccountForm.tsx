@@ -71,8 +71,6 @@ const AccountForm: FC<AccountFormProps> = ({
   const [updateAccount] = useUpdateAccountMutation();
 
   const onSubmit = async (formData: Account) => {
-    console.log('submitted Account', formData);
-
     try {
       if (formData.id) {
         await updateAccount(formData).unwrap();

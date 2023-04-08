@@ -27,15 +27,27 @@ const LimitGroup: FC<ILimitGroupProps> = ({ limitGroupName, shifts }) => {
           {limitGroupName}
         </Grid>
         <Grid xs={11} container columnSpacing={1}>
-          {Object.values(shifts).map((accounts) => (
             <Grid xs={4} key={uuid()}>
-              <Stack spacing={2}>
-                {accounts.map((account: AccountFromServer) => (
-                  <AccountCard account={account} key={uuid()} />
-                ))}
-              </Stack>
+                <Stack spacing={2}>
+                  {shifts[1]?.map((account: AccountFromServer) => (
+                    <AccountCard account={account} key={uuid()} />
+                  ))}
+                </Stack>
             </Grid>
-          ))}
+           <Grid xs={4} key={uuid()}>
+                <Stack spacing={2}>
+                  {shifts[2]?.map((account: AccountFromServer) => (
+                    <AccountCard account={account} key={uuid()} />
+                  ))}
+                </Stack>
+            </Grid>
+           <Grid xs={4} key={uuid()}>
+                <Stack spacing={2}>
+                  {shifts[3]?.map((account: AccountFromServer) => (
+                    <AccountCard account={account} key={uuid()} />
+                  ))}
+                </Stack>
+            </Grid>
         </Grid>
       </Grid>
     </Box>

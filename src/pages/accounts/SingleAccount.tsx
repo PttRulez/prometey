@@ -50,9 +50,17 @@ const SingleAccount: FC = () => {
       { name: 'Никнейм', value: account.nickname },
       { name: 'Боб Айди', value: account.bob_id_name },
       { name: 'Сеть', value: account.room.network.name },
-      { name: 'Рум', value: account?.room.name },
+      { name: 'Рум', value: account.room.name },
       { name: 'Дисциплина', value: account.disciplines.join(' ') },
       { name: 'Лимиты', value: account.limits.join(' ') },
+      {
+        name: 'Профиль',
+        value: account.profile
+          ? `${account.profile.name} ${account.profile.disciplines.join(
+              ' '
+            )} ${account.profile.limits.join(' ')}`
+          : '',
+      },
       { name: 'Смена', value: account.shift },
       { name: 'Аффилейт', value: account.affiliate?.name },
       { name: 'Логин', value: account.login },

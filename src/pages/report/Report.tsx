@@ -12,7 +12,6 @@ import {
   GridColDef,
   GridFooter,
   GridFooterContainer,
-  GridRowEditStopParams,
 } from '@mui/x-data-grid';
 import ReportFilters from './ReportFilters';
 import {
@@ -27,6 +26,7 @@ import { AxiosError } from 'axios';
 import {
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -47,7 +47,10 @@ const Report: FC = () => {
   const { data: reportData } = useGetReportQuery(reportFilters);
   const [pageSize, setPageSize] = useState(20);
   const [updateReport] = useUpdateReportMutation();
-  const [updateMonthBankrolls] = useUpdateMonthBankrollsMutation();
+  const [
+    updateMonthBankrolls,
+    { isLoading: monthIsUpdating },
+  ] = useUpdateMonthBankrollsMutation();
   const [createMonth] = useCreateReportMutation();
   const [depositAccount, setDepositAccount] = useState(null);
   const [cashoutAccount, setCashoutAccount] = useState(null);
@@ -165,8 +168,11 @@ const Report: FC = () => {
     );
   }, [reportData]);
 
-  const editHandler = async (params: GridRowEditStopParams) => {
-    const body = pick(params.row, reportFormProps) as ReportType;
+  const editHandler = async (
+    newRow: ReportFromServer,
+    oldRow: ReportFromServer
+  ): Promise<ReportFromServer> => {
+    const body = pick(newRow, reportFormProps) as ReportType;
 
     try {
       await updateReport(body).unwrap();
@@ -186,6 +192,8 @@ const Report: FC = () => {
           text: 'Не удалось обновить отчет',
         })
       );
+    } finally {
+      return newRow;
     }
   };
 
@@ -200,7 +208,7 @@ const Report: FC = () => {
               )
             }
           >
-            <CalendarMonthIcon />
+            {monthIsUpdating ? <CircularProgress /> : <CalendarMonthIcon />}
           </IconButton>
         </Grid>
         <Grid>
@@ -272,8 +280,9 @@ const Report: FC = () => {
         rows={reportData?.reports ?? []}
         rowsPerPageOptions={[5, 10, 15, 20, 30, 50, 100]}
         onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-        onRowEditStop={editHandler}
+        experimentalFeatures={{ newEditingApi: true }}
         pageSize={pageSize}
+        processRowUpdate={editHandler}
       />
       <Dialog open={!!depositAccount} onClose={() => setDepositAccount(null)}>
         {depositAccount && (
@@ -322,3 +331,4 @@ const Report: FC = () => {
 };
 
 export default Report;
+

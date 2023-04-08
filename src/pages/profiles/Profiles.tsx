@@ -58,8 +58,12 @@ const Profiles: FC = () => {
               <TableCell>{index + 1}</TableCell>
               <TableCell>{profile.name}</TableCell>
               <TableCell>{profile.contract.network.name}</TableCell>
-              <TableCell>{profile.disciplines.join(', ')}</TableCell>
-              <TableCell>{profile.limits.join(', ')}</TableCell>
+              <TableCell>
+                {profile.disciplines ? profile.disciplines.join(', ') : ''}
+              </TableCell>
+              <TableCell>
+                {profile.limits ? profile.limits.join(', ') : ''}
+              </TableCell>
               <TableCell>
                 {profile.accounts.map((account) => (
                   <Link
